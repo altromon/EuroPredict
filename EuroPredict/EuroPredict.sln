@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EuroPredict.Model.Interfaces", "EuroPredict.Model.Interfaces\EuroPredict.Model.Interfaces.csproj", "{44FBB86D-CAB6-460E-B726-DA575CAB7FBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EuroPredict.Model.Interfaces", "EuroPredict.Model.Interfaces\EuroPredict.Model.Interfaces.csproj", "{44FBB86D-CAB6-460E-B726-DA575CAB7FBE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EuroPredict.Core.ExcelCombinationRepository", "EuroPredict.Core.ExcelCombinationRepository\EuroPredict.Core.ExcelCombinationRepository.csproj", "{F62CFFD7-4525-4140-B7B2-B3E6472A2421}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{44FBB86D-CAB6-460E-B726-DA575CAB7FBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44FBB86D-CAB6-460E-B726-DA575CAB7FBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44FBB86D-CAB6-460E-B726-DA575CAB7FBE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F62CFFD7-4525-4140-B7B2-B3E6472A2421}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F62CFFD7-4525-4140-B7B2-B3E6472A2421}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F62CFFD7-4525-4140-B7B2-B3E6472A2421}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F62CFFD7-4525-4140-B7B2-B3E6472A2421}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
