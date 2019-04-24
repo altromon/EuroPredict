@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EuroPredict.Model.Interfaces
 {
-    interface NumberInfo
+    public interface INumberInfo
     {
         int Number { get; set; }
         int TotalTimes { get; set; }

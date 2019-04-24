@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EuroPredict.Model.Interfaces
 {
-    interface Combination
+    public interface ICombination
     {
         IEnumerable<int> Columns { get; set; }
         IEnumerable<int> Stars { get; set; }
