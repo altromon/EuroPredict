@@ -1,5 +1,6 @@
 using EuroPredict.Core.ExcelCombinationRepository;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Linq;
 
 namespace Europredict.Core.ExcelCombinationRepositoryTests
 {
@@ -41,6 +42,20 @@ namespace Europredict.Core.ExcelCombinationRepositoryTests
 
             //Assert
             Assert.IsNotNull(actual);
+        }
+
+        [DataTestMethod]
+        [DynamicData(nameof(ExternalExcelSourceData.TestData), typeof(ExternalExcelSourceData), DynamicDataSourceType.Method)]
+        public void GetCombinationsTest_ExistingItems_ExpectedData(string excelPath)
+        {
+            //Setup
+            sut.DataSource = excelPath;
+
+            //Act
+            var actual = sut.GetCombinations();
+
+            //Assert
+            Assert.IsTrue(actual.Count() > 0);
         }
     }
 }

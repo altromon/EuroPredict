@@ -17,7 +17,48 @@ namespace EuroPredict.Core.ExcelCombinationRepository
         public IEnumerable<ICombination> GetCombinations()
         {
             var excelDataSet = GetExcelDataSet();
-            return Enumerable.Empty<ICombination>();
+            IEnumerable<ICombination> combinations = ExtractCombinations(excelDataSet);
+
+            return combinations;
+        }
+
+        private IEnumerable<ICombination> ExtractCombinations(DataSet excelDataSet)
+        {
+            var combinations = new List<ICombination>();
+            foreach (DataTable sheet in excelDataSet.Tables)
+            {
+                IEnumerable<ICombination> sheetCombinations = ExtractSheetCombinations(sheet);
+                combinations.AddRange(sheetCombinations);
+            }
+
+            return combinations;
+        }
+
+        public IEnumerable<ICombination> ExtractSheetCombinations(DataTable sheet)
+        {
+            var combinations = new List<ICombination>();
+            foreach (DataRow row in sheet.Rows)
+            {
+                bool canLoad = false;
+                for(int i = 0; i< row.ItemArray.Length; i++)
+                {
+                    var item = row.ItemArray[i];
+                    if(!(item is DBNull) && (item is DateTime))
+                    {
+                        canLoad = true;
+                    }
+
+                    if(canLoad)
+                    {
+                        //TODO: fix upload
+                        ICombination combination = CombinationBuilder.CreateCombination(row.ItemArray, i+1);
+                        combinations.Add(combination);
+                        continue;
+                    }
+                }
+            }
+
+            return combinations;
         }
 
         public DataSet GetExcelDataSet()
@@ -28,11 +69,6 @@ namespace EuroPredict.Core.ExcelCombinationRepository
                 using (var reader = ExcelReaderFactory.CreateReader(stream))
                 {
                     return reader.AsDataSet();
-                    /*
-                    // Ejemplos de acceso a datos
-                    DataTable table = result.Tables[0];
-                    DataRow row = table.Rows[0];
-                    string cell = row[0].ToString();*/
                 }
             }
         }
