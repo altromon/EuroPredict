@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EuroPredict.Model.Interface
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EuroPredict.Core.ExcelCombinationRepository", "EuroPredict.Core.ExcelCombinationRepository\EuroPredict.Core.ExcelCombinationRepository.csproj", "{F62CFFD7-4525-4140-B7B2-B3E6472A2421}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Europredict.Core.ExcelCombinationRepositoryTests", "Europredict.Core.ExcelCombinationRepositoryTests\Europredict.Core.ExcelCombinationRepositoryTests.csproj", "{6C507D99-CDBC-409A-86C0-ED99E2B0706F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Europredict.Model.Shared", "Europredict.Model.Shared\Europredict.Model.Shared.csproj", "{B8146734-5F1A-4E08-8A70-5B3BABC13043}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{F62CFFD7-4525-4140-B7B2-B3E6472A2421}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F62CFFD7-4525-4140-B7B2-B3E6472A2421}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F62CFFD7-4525-4140-B7B2-B3E6472A2421}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C507D99-CDBC-409A-86C0-ED99E2B0706F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C507D99-CDBC-409A-86C0-ED99E2B0706F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C507D99-CDBC-409A-86C0-ED99E2B0706F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C507D99-CDBC-409A-86C0-ED99E2B0706F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8146734-5F1A-4E08-8A70-5B3BABC13043}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8146734-5F1A-4E08-8A70-5B3BABC13043}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8146734-5F1A-4E08-8A70-5B3BABC13043}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8146734-5F1A-4E08-8A70-5B3BABC13043}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
