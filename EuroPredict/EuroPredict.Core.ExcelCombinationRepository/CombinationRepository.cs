@@ -53,12 +53,12 @@ namespace EuroPredict.Core.ExcelCombinationRepository
                         //TODO: fix upload
                         ICombination combination = CombinationBuilder.CreateCombination(row.ItemArray, i+1);
                         combinations.Add(combination);
-                        continue;
+                        break;
                     }
                 }
             }
 
-            return combinations;
+            return combinations.Where(combination => combination.Columns.Count() > 0 && combination.Stars.Count() > 0);
         }
 
         public DataSet GetExcelDataSet()

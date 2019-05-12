@@ -1,5 +1,6 @@
 using EuroPredict.Core.ExcelCombinationRepository;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Linq;
 
 namespace Europredict.Core.ExcelCombinationRepositoryTests
@@ -56,6 +57,7 @@ namespace Europredict.Core.ExcelCombinationRepositoryTests
 
             //Assert
             Assert.IsTrue(actual.Count() > 0);
+            Console.WriteLine(actual.Count());
         }
     }
 }
