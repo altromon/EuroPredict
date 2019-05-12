@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Europredict.Core.CombinationCalculator</RootNamespace>
+    <AssemblyName>Europredict.Core.CombinationCalculator</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EuroPredict.Model.Interfaces\EuroPredict.Model.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>
