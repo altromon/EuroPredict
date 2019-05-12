@@ -9,7 +9,6 @@ namespace EuroPredict.Model.Interfaces
         IEnumerable<INumberInfo> StarsSummary { get; set; }
 
         int GetColumnTotalTimes(int column);
-        int GetStartTotalTimes(int star);
-
+        int GetStarTotalTimes(int star);
     }
 }

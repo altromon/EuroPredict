@@ -21,7 +21,7 @@ namespace Europredict.Core.CombinationCalculator
             return collection?.FirstOrDefault(item => item.Number == value)?.TotalTimes ?? 0;
         }
 
-        public int GetStartTotalTimes(int star)
+        public int GetStarTotalTimes(int star)
         {
             return GetCollectionValueTotalTimes(StarsSummary, star);
         }
