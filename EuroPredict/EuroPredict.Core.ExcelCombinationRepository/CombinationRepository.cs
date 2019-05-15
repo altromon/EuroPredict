@@ -50,7 +50,6 @@ namespace EuroPredict.Core.ExcelCombinationRepository
 
                     if(canLoad)
                     {
-                        //TODO: fix upload
                         ICombination combination = CombinationBuilder.CreateCombination(row.ItemArray, i+1);
                         combinations.Add(combination);
                         break;

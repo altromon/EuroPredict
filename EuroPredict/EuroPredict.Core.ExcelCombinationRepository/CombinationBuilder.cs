@@ -24,7 +24,8 @@ namespace EuroPredict.Core.ExcelCombinationRepository
             for (int i = 0; i < totalItems; i++)
             {
                 var item = sourceItemArray[preInitialIndex + i];
-                if (!(item is DBNull) || (item is string) && Regex.IsMatch(item as string, "[0-9]*")) res.Add(Convert.ToInt32(item));
+                if (!(item is DBNull)  && 
+                    (!(item is string) || (item is string) && Regex.IsMatch(item as string, "[0-9]+"))) res.Add(Convert.ToInt32(item));
             }
 
             return res;
