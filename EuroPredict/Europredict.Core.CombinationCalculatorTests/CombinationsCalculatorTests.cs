@@ -1,4 +1,4 @@
-﻿using Europredict.Core.CombinationCalculator;
+﻿using EuroPredict.Core.CombinationCalculator;
 using EuroPredict.Model.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Europredict.Core.CombinationCalculatorTests
+namespace EuroPredict.Core.CombinationCalculatorTests
 {
     [TestClass]
     public class CombinationsCalculatorTests
@@ -16,11 +16,7 @@ namespace Europredict.Core.CombinationCalculatorTests
         [TestInitialize]
         public void Setup()
         {
-            sut = new CombinationsCalculator()
-            {
-                Combinations = new List<ICombination>(),
-                CombinationsSummary = new CombinationsSummary()
-            };
+            sut = new CombinationsCalculator();
         }
 
         [TestMethod]
@@ -58,7 +54,7 @@ namespace Europredict.Core.CombinationCalculatorTests
         public void GetCombinationWithMostCommonNumbers_NullData_ExpectedNullValue()
         {
             //Act
-            var actual = sut.GetCombinationWithMostCommonNumbers();
+            var actual = sut.GetCombinationWithMostCommonNumbers(new CombinationsSummary());
 
             //Assert
             Assert.IsNull(actual.Columns);
@@ -68,12 +64,8 @@ namespace Europredict.Core.CombinationCalculatorTests
         [TestMethod]
         public void GetCombinationWithMostCommonNumbers_EmptyData_ExpectedEmptyValue()
         {
-            //Setup
-            sut.Combinations = new List<ICombination>();
-            sut.CombinationsSummary = new CombinationsSummary();
-
             //Act
-            var actual = sut.GetCombinationWithMostCommonNumbers();
+            var actual = sut.GetCombinationWithMostCommonNumbers(new CombinationsSummary());
 
             //Assert
             Assert.IsNull(actual.Columns);
@@ -109,14 +101,14 @@ namespace Europredict.Core.CombinationCalculatorTests
             };
             var expectedStars = new List<int>() { 2, 4 };
 
-            sut.CombinationsSummary = new CombinationsSummary()
+            var combinationsSummary = new CombinationsSummary()
             {
                 ColumnsSummary = columnsSummary,
                 StarsSummary = starsSummary
             };
 
             //Act
-            var actual = sut.GetCombinationWithMostCommonNumbers();
+            var actual = sut.GetCombinationWithMostCommonNumbers(combinationsSummary);
 
             //Assert
             CollectionAssert.AreEquivalent(expectedColumns, actual.Columns.ToList());

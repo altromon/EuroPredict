@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Europredict.Model.Shared
+namespace EuroPredict.Model.Shared
 {
     public class OperationResult
     {

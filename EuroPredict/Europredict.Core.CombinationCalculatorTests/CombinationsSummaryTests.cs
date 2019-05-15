@@ -1,9 +1,9 @@
-using Europredict.Core.CombinationCalculator;
+using EuroPredict.Core.CombinationCalculator;
 using EuroPredict.Model.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
-namespace Europredict.Core.CombinationCalculatorTests
+namespace EuroPredict.Core.CombinationCalculatorTests
 {
     [TestClass]
     public class CombinationsSummaryTests

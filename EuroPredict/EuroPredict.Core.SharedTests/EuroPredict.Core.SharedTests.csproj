@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -13,8 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\EuroPredict.Core.CombinationCalculator\EuroPredict.Core.CombinationCalculator.csproj" />
-    <ProjectReference Include="..\EuroPredict.Core.ExcelCombinationRepository\EuroPredict.Core.ExcelCombinationRepository.csproj" />
+    <ProjectReference Include="..\EuroPredict.Core.Shared\EuroPredict.Core.Shared.csproj" />
   </ItemGroup>
 
 </Project>

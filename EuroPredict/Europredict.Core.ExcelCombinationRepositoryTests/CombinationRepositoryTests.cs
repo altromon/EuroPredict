@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 
-namespace Europredict.Core.ExcelCombinationRepositoryTests
+namespace EuroPredict.Core.ExcelCombinationRepositoryTests
 {
     [TestClass]
     [DeploymentItem("./Assets/HistoricoEuromillones.xls", "./Assets")]

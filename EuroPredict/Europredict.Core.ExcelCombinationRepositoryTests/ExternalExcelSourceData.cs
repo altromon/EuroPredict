@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Europredict.Core.ExcelCombinationRepositoryTests
+namespace EuroPredict.Core.ExcelCombinationRepositoryTests
 {
     public class ExternalExcelSourceData
     {

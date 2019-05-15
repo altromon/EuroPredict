@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>Europredict.Core.CombinationCalculator</RootNamespace>
-    <AssemblyName>Europredict.Core.CombinationCalculator</AssemblyName>
+    <RootNamespace>EuroPredict.Core.CombinationCalculator</RootNamespace>
+    <AssemblyName>EuroPredict.Core.CombinationCalculator</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

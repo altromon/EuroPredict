@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Europredict.Core.ExcelCombinationRepositoryTests
+namespace EuroPredict.Core.ExcelCombinationRepositoryTests
 {
     [TestClass]
     public class CombinationBuilderTests

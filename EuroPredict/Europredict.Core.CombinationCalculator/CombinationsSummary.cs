@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Europredict.Core.CombinationCalculator
+namespace EuroPredict.Core.CombinationCalculator
 {
     public class CombinationsSummary : ICombinationsSummary
     {
