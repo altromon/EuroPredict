@@ -35,10 +35,26 @@ namespace EuroPredict.Core.CombinationCalculator
             return GetCombinationWithMostCommonNumbers(adapter.GetCombinationsSummary());
         }
 
-        public ICombination GetMostProbableCombinationFromNumber(IEnumerable<ICombination> combinations, int startValue)
+        public ICombination GetMostProbableCombinationFromNumber(IEnumerable<ICombination> combinations, IEnumerable<int> containedColumns, IEnumerable<int> containedStars)
         {
-            //TODO: develop method to return the combination which uses the start value the more times, then the second value is that which appears the most with the first and so on.
-            return null;
+            var restrictedCombinations = combinations.Where(combination => IsContained(combination.Columns, containedColumns) && IsContained(combination.Stars, containedStars));
+            return GetCombinationWithMostCommonNumbers(restrictedCombinations);
+        }
+
+        public ICombination GetMostProbableCombinationFromNumber(IEnumerable<ICombination> combinations, IEnumerable<int> containedColumns)
+        {
+            return GetMostProbableCombinationFromNumber(combinations, containedColumns, containedStars: null);
+        }
+
+        private bool IsContained(IEnumerable<int> containerCollection, IEnumerable<int> containedCollection)
+        {
+            if (containedCollection == null) return true;
+            if (containedCollection.Count() == 0) return true;
+
+            var containerHashSet = new HashSet<int>(containerCollection);
+            var containedHashSet = new HashSet<int>(containedCollection);
+
+            return containerHashSet.IsSupersetOf(containedHashSet);
         }
     }
 }

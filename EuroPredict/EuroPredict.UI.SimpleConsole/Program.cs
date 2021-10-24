@@ -7,12 +7,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using EuroPredict.Core.CSVCombinationRepository;
+using EuroPredict.Model.Interfaces;
+using EuroPredict.UI.SimpleConsole.Properties;
 
 namespace EuroPredict.UI.SimpleConsole
 {
     class Program
     {
-        static void Main()
+        static void Main(string[] args)
         {
             IConfigurationRoot configuration = LoadConfiguration();
 
@@ -24,12 +26,45 @@ namespace EuroPredict.UI.SimpleConsole
             };
             var combinations = repository.GetCombinations();
             var combinationsCalculator = new CombinationsCalculator();
-            var combination = combinationsCalculator.GetCombinationWithMostCommonNumbers(combinations);
+            ICombination combination = new Combination();
+            if (args.Count() == 0)
+            {
+                combination = combinationsCalculator.GetCombinationWithMostCommonNumbers(combinations);
+            }
+            else
+            {
+                var columns = ConvertToIntCollection(args[0]);
+                IEnumerable<int> stars = new List<int>();
+                if (args.Count() > 1)
+                {
+                    stars = ConvertToIntCollection(args[1]);
+                }
+                combination = combinationsCalculator.GetMostProbableCombinationFromNumber(combinations, columns, stars);
+            }
 
-            Console.WriteLine($"Columns: {combination.Columns.ToSortedString()}");
-            Console.WriteLine($"Stars: {combination.Stars.ToSortedString()}");
+            if (combination.Columns.Count() == 0)
+            {
+                Console.WriteLine(string.Format(Resources.NoCombination, args[0], args[1]));
+            }
+            else
+            { 
+                Console.WriteLine($"Columns: {combination.Columns.ToSortedString()}");
+                Console.WriteLine($"Stars: {combination.Stars.ToSortedString()}");
+            }
         }
 
+        private static IEnumerable<int> ConvertToIntCollection(string collectionString)
+        {
+            IEnumerable<int> res = new List<int>();
+
+            try
+            {
+                res = collectionString.Split(',').Select(x => int.Parse(x)).ToList();
+            }
+            catch (Exception) { }
+
+            return res;
+        }
 
         private static IConfigurationRoot LoadConfiguration()
         {
