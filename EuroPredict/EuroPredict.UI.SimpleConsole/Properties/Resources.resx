@@ -118,6 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="NoCombination" xml:space="preserve">
-    <value>No Combination matches the provided requirements - Columns: {0}, Stars {1}</value>
+    <value>No Combination matches the provided requirements - Columns: {0}, Stars: {1}</value>
   </data>
 </root>

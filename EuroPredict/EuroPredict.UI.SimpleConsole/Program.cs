@@ -44,7 +44,9 @@ namespace EuroPredict.UI.SimpleConsole
 
             if (combination.Columns.Count() == 0)
             {
-                Console.WriteLine(string.Format(Resources.NoCombination, args[0], args[1]));
+                var columns = args[0];
+                var stars = args.Length > 1 ? args[1] : string.Empty;
+                Console.WriteLine(string.Format(Resources.NoCombination, columns, stars));
             }
             else
             { 

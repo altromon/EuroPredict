@@ -61,7 +61,7 @@ namespace EuroPredict.UI.SimpleConsole.Properties {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a No Combination matches the provided requirements - Columns: {0}, Stars {1}.
+        ///   Busca una cadena traducida similar a No Combination matches the provided requirements - Columns: {0}, Stars: {1}.
         /// </summary>
         internal static string NoCombination {
             get {
