@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EuroPredict.Core.CombinationCalculator\EuroPredict.Core.CombinationCalculator.csproj" />
+    <ProjectReference Include="..\EuroPredict.Core.CSVCombinationRepository\EuroPredict.Core.CSVCombinationRepository.csproj" />
     <ProjectReference Include="..\EuroPredict.Core.ExcelCombinationRepository\EuroPredict.Core.ExcelCombinationRepository.csproj" />
     <ProjectReference Include="..\EuroPredict.Core.Shared\EuroPredict.Core.Shared.csproj" />
   </ItemGroup>

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace EuroPredict.Core.ExcelCombinationRepository
+namespace EuroPredict.Model.Shared
 {
     public class Combination : ICombination
     {

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EuroPredict.Model.Interfaces\EuroPredict.Model.Interfaces.csproj" />
+    <ProjectReference Include="..\Europredict.Model.Shared\Europredict.Model.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

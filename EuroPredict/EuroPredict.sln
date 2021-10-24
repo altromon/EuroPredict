@@ -15,11 +15,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EuroPredict.Core.Combinatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EuroPredict.Core.CombinationCalculatorTests", "Europredict.Core.CombinationCalculatorTests\EuroPredict.Core.CombinationCalculatorTests.csproj", "{CA50D75C-1749-4588-ABE0-7E5A2B65AC06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EuroPredict.UI.SimpleConsole", "EuroPredict.UI.SimpleConsole\EuroPredict.UI.SimpleConsole.csproj", "{973ACB18-6805-4097-A97A-B1BE6888A93D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EuroPredict.UI.SimpleConsole", "EuroPredict.UI.SimpleConsole\EuroPredict.UI.SimpleConsole.csproj", "{973ACB18-6805-4097-A97A-B1BE6888A93D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EuroPredict.Core.Shared", "EuroPredict.Core.Shared\EuroPredict.Core.Shared.csproj", "{B63FB5DB-DEB1-44E3-8B4A-11A89A19D051}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EuroPredict.Core.Shared", "EuroPredict.Core.Shared\EuroPredict.Core.Shared.csproj", "{B63FB5DB-DEB1-44E3-8B4A-11A89A19D051}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EuroPredict.Core.SharedTests", "EuroPredict.Core.SharedTests\EuroPredict.Core.SharedTests.csproj", "{429EBFD6-5416-4F05-AFF2-65C924B8E711}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EuroPredict.Core.SharedTests", "EuroPredict.Core.SharedTests\EuroPredict.Core.SharedTests.csproj", "{429EBFD6-5416-4F05-AFF2-65C924B8E711}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EuroPredict.Core.CSVCombinationRepository", "EuroPredict.Core.CSVCombinationRepository\EuroPredict.Core.CSVCombinationRepository.csproj", "{CE660DDC-DFB7-4EEA-9EC4-4A3A63A639F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EuroPredict.Core.CSVCombinationRepositoryTests", "EuroPredict.Core.CSVCombinationRepositoryTests\EuroPredict.Core.CSVCombinationRepositoryTests.csproj", "{A0CE75AE-6C87-4027-AAAD-FD9276F879B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +67,14 @@ Global
 		{429EBFD6-5416-4F05-AFF2-65C924B8E711}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{429EBFD6-5416-4F05-AFF2-65C924B8E711}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{429EBFD6-5416-4F05-AFF2-65C924B8E711}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE660DDC-DFB7-4EEA-9EC4-4A3A63A639F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE660DDC-DFB7-4EEA-9EC4-4A3A63A639F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE660DDC-DFB7-4EEA-9EC4-4A3A63A639F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE660DDC-DFB7-4EEA-9EC4-4A3A63A639F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0CE75AE-6C87-4027-AAAD-FD9276F879B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0CE75AE-6C87-4027-AAAD-FD9276F879B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0CE75AE-6C87-4027-AAAD-FD9276F879B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0CE75AE-6C87-4027-AAAD-FD9276F879B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
