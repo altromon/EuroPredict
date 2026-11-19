@@ -1,0 +1,124 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/security/enclave.schema.json",
+  "title": "Security Enclave Schema (Zero Trust Architecture Boundary)",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "version",
+    "trust-zone",
+    "perimeter-rules",
+    "allowed-inbound",
+    "allowed-outbound"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^SEC-ENC-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "type": {
+      "type": "string",
+      "const": "security-enclave"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Security enclave semantic version (SemVer)."
+    },
+    "schema-version": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "trust-zone": {
+      "type": "string",
+      "enum": [
+        "untrusted",
+        "semi-trusted",
+        "trusted",
+        "highly-trusted",
+        "dmz",
+        "zero-trust-boundary"
+      ],
+      "description": "Zero Trust confidence zone assigned to enclave."
+    },
+    "trust-level": {
+      "type": "string",
+      "description": "Descriptive Zero Trust confidence level."
+    },
+    "isolation": {
+      "type": "string",
+      "description": "Technical perimeter isolation mechanism."
+    },
+    "perimeter-rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "description": "Perimeter rules defining enclave security boundary (e.g. mTLS, IP allowlist)."
+    },
+    "allowed-inbound": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(CMP|SEC-ENC)-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Components or enclaves authorized to initiate inbound connections."
+    },
+    "allowed-outbound": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(CMP|SEC-ENC)-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Components or enclaves this enclave can connect to."
+    },
+    "enforced-by": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^SEC-REQ-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Security requirements enforcing this enclave's rules."
+    },
+    "authentication-mechanism": {
+      "type": "string",
+      "enum": [
+        "mtls",
+        "jwt",
+        "api-key",
+        "oauth2",
+        "none"
+      ],
+      "description": "Authentication mechanism required at enclave perimeter."
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

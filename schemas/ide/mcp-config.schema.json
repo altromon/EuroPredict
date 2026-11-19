@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/ide/mcp-config.schema.json",
+  "title": "IDE MCP Configuration Schema (Cursor, Antigravity, VS Code)",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^(MCP-CFG|IDE-MCP|MCP)-[A-Z0-9]+(-[A-Z0-9]+)*$",
+      "description": "Optional identifier for MCP configuration artifact."
+    },
+    "type": {
+      "type": "string",
+      "const": "mcp-config"
+    },
+    "mcpServers": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "command"
+        ],
+        "properties": {
+          "command": {
+            "type": "string",
+            "minLength": 1
+          },
+          "args": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "env": {
+            "type": "object"
+          },
+          "disabled": {
+            "type": "boolean"
+          },
+          "alwaysAllow": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "MCP server registry format for Cursor and Antigravity."
+    },
+    "servers": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "command"
+        ],
+        "properties": {
+          "command": {
+            "type": "string",
+            "minLength": 1
+          },
+          "args": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "env": {
+            "type": "object"
+          },
+          "disabled": {
+            "type": "boolean"
+          },
+          "alwaysAllow": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "MCP server registry format for VS Code."
+    }
+  },
+  "additionalProperties": false
+}

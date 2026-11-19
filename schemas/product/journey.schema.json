@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/product/journey.schema.json",
+  "title": "Customer / Operator Journey Schema",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "version",
+    "persona",
+    "stages",
+    "touchpoints"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^JRN-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "type": {
+      "type": "string",
+      "const": "journey"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Journey semantic version (SemVer)."
+    },
+    "schema-version": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "persona": {
+      "type": "string",
+      "pattern": "^ACT-[A-Z0-9]+(-[A-Z0-9]+)*$",
+      "description": "Actor (persona) starring in this journey."
+    },
+    "stages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "description": "Sequential journey stages (e.g. Awareness, Onboarding, Activation, Retention)."
+    },
+    "touchpoints": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "description": "Touchpoints between persona and system at each stage."
+    },
+    "related-use-cases": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^UC-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "System use cases related to this journey."
+    },
+    "pain-points": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Frictions or issues detected along the user journey."
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

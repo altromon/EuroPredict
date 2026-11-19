@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/product/actor.schema.json",
+  "title": "ProductShape Actor Schema (Versionable)",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "version",
+    "role-type"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^ACT-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "type": {
+      "type": "string",
+      "const": "actor"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Artifact semantic version (SemVer)."
+    },
+    "schema-version": {
+      "type": "string",
+      "description": "Schema specification version used."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "role-type": {
+      "type": "string",
+      "enum": [
+        "human-user",
+        "ai-agent",
+        "external-system",
+        "sensor-iot"
+      ]
+    },
+    "description": {
+      "type": "string"
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^ACT-[A-Z0-9]+(-[A-Z0-9]+)*$",
+      "description": "Identifier of the actor superseded by this version or artifact."
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^ACT-[A-Z0-9]+(-[A-Z0-9]+)*$",
+      "description": "Identifier of the new actor superseding this one upon deprecation/retirement."
+    }
+  },
+  "additionalProperties": false
+}

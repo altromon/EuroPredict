@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/sdd/proposal.schema.json",
+  "title": "Spec-Driven Development Change Proposal Schema (CHG-*)",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(CHG|FEAT|PATCH)-[A-Z0-9]+(-[A-Z0-9]+)*$",
+      "description": "Unique identifier of the change proposal."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "spec-change-proposal",
+        "proposal"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "proposed",
+        "review",
+        "approved",
+        "applied",
+        "active",
+        "completed",
+        "rejected"
+      ]
+    },
+    "author": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Semantic versioning (SemVer)."
+    },
+    "schema-version": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string"
+    },
+    "handoff": {
+      "type": "string",
+      "description": "Associated handoff sidecar reference."
+    },
+    "sdd-framework-compat": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Supported SDD framework adapters."
+    },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "digest": {
+            "type": "string"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "anchor": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

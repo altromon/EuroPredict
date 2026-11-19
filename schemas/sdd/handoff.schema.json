@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/sdd/handoff.schema.json",
+  "title": "PDaC Product Handoff Sidecar Schema (HOF-*)",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "changeId",
+    "subgraph"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^HOF-[A-Z0-9]+(-[A-Z0-9]+)*$",
+      "description": "Immutable identifier emitted by PDaC handoff."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "handoff",
+        "product-handoff"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "changeId": {
+      "type": "string",
+      "pattern": "^(CHG|FEAT)-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "subgraph": {
+      "type": "object",
+      "required": [
+        "requirements"
+      ],
+      "properties": {
+        "requirements": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "useCases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "businessRules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "securityRequirements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "abuseCases": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "privacyRequirements": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dataAssets": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "privacyRopa": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "actors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "digest": {
+            "type": "string"
+          },
+          "anchor": {
+            "type": "string"
+          },
+          "comment": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": true
+}

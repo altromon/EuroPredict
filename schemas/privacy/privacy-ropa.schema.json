@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/privacy/privacy-ropa.schema.json",
+  "title": "Record of Processing Activities Schema (PRIV-ROPA-* / GDPR Art. 30)",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "version",
+    "lawful-basis",
+    "processing-purpose",
+    "use-cases",
+    "data-assets",
+    "data-subjects",
+    "retention-ttl"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^PRIV-ROPA-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "type": {
+      "type": "string",
+      "const": "privacy-ropa"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "ROPA record semantic version (SemVer)."
+    },
+    "schema-version": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "lawful-basis": {
+      "type": "string",
+      "enum": [
+        "consent",
+        "contract",
+        "legal-obligation",
+        "vital-interests",
+        "public-task",
+        "legitimate-interests"
+      ],
+      "description": "Lawful basis for processing under GDPR Art. 6.1."
+    },
+    "special-category-condition": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "explicit-consent",
+        "employment-social-security",
+        "vital-interests",
+        "public-interest",
+        "preventive-medicine",
+        "public-health"
+      ],
+      "description": "GDPR Art. 9.2 condition when processing special category data."
+    },
+    "processing-purpose": {
+      "type": "string",
+      "minLength": 10
+    },
+    "use-cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^UC-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Upstream Use Cases (UC-*) that trigger this data processing activity."
+    },
+    "data-assets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^DATA-ASSET-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Personal Data Assets (DATA-ASSET-*) processed in this activity."
+    },
+    "data-subjects": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^ACT-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      }
+    },
+    "retention-ttl": {
+      "type": "string",
+      "pattern": "^([0-9]+(d|m|y)|session-only|indefinite-anonymized)$"
+    },
+    "cross-border-transfer": {
+      "type": "boolean"
+    },
+    "transfer-safeguards": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "enum": [
+        null,
+        "adequacy-decision",
+        "scc",
+        "bcr",
+        "derogation"
+      ]
+    },
+    "subprocessors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "dpia-required": {
+      "type": "boolean"
+    },
+    "dpia-reference": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^DPIA-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "mitigated-by": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^PRIV-REQ-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Privacy requirements (PRIV-REQ-*) governing and enforcing this processing activity."
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^PRIV-ROPA-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^PRIV-ROPA-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    }
+  },
+  "additionalProperties": false
+}

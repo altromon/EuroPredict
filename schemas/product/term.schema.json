@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/product/term.schema.json",
+  "title": "Domain Glossary Term Schema (Ubiquitous Language)",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "version",
+    "definition",
+    "bounded-context"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^TERM-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "type": {
+      "type": "string",
+      "const": "term"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Term semantic version (SemVer)."
+    },
+    "schema-version": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 2,
+      "description": "Canonical name of the term in the domain ubiquitous language."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "definition": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Precise and unambiguous definition of the term in the domain context."
+    },
+    "bounded-context": {
+      "type": "string",
+      "description": "DDD Bounded Context this term belongs to (e.g. FlightControl, Telemetry, Billing)."
+    },
+    "synonyms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Synonyms or alternative terms used colloquially that map to this canonical term."
+    },
+    "anti-terms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Incorrect or ambiguous terms that MUST NOT be used for this concept."
+    },
+    "related-terms": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^TERM-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Glossary terms semantically related."
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

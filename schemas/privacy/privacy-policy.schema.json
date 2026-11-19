@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/privacy/privacy-policy.schema.json",
+  "title": "Privacy-by-Design as Code Governance Policy Schema",
+  "type": "object",
+  "required": [
+    "version",
+    "project",
+    "regulatory_frameworks",
+    "default_action",
+    "classifications",
+    "agent_guardrails",
+    "ci_gates"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(PRIV-POL|POL-PRIV)-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "type": {
+      "type": "string",
+      "const": "privacy-policy"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project": {
+      "type": "string",
+      "minLength": 1
+    },
+    "regulatory_frameworks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": [
+          "GDPR",
+          "LOPDGDD",
+          "ISO-27701",
+          "CCPA",
+          "HIPAA",
+          "LGPD"
+        ]
+      }
+    },
+    "default_action": {
+      "type": "string",
+      "enum": [
+        "DENY_UNREGISTERED_PII",
+        "ALLOW",
+        "REVIEW_REQUIRED"
+      ]
+    },
+    "classifications": {
+      "type": "object",
+      "required": [
+        "public",
+        "internal",
+        "confidential_pii",
+        "special_category_sensitive"
+      ],
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "action",
+          "encryption_at_rest",
+          "encryption_in_transit",
+          "allow_in_logs",
+          "allow_in_ai_prompts"
+        ],
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "ALLOW",
+              "STRICT_GOVERNANCE",
+              "DPIA_APPROVAL_REQUIRED",
+              "DENY"
+            ]
+          },
+          "description": {
+            "type": "string"
+          },
+          "exception_requires": {
+            "type": "string"
+          },
+          "require_ropa_entry": {
+            "type": "boolean"
+          },
+          "require_dpia_artifact": {
+            "type": "boolean"
+          },
+          "encryption_at_rest": {
+            "type": "boolean"
+          },
+          "encryption_in_transit": {
+            "type": "boolean"
+          },
+          "require_field_level_encryption": {
+            "type": "boolean"
+          },
+          "allow_in_logs": {
+            "type": "boolean"
+          },
+          "log_masking_strategy": {
+            "type": "string"
+          },
+          "allow_in_ai_prompts": {
+            "type": "boolean"
+          },
+          "max_retention_days": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "require_right_to_erasure": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "cross_border_transfers": {
+      "type": "object",
+      "properties": {
+        "allowed_regions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "require_scc_for_third_countries": {
+          "type": "boolean"
+        },
+        "approved_subprocessors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "agent_guardrails": {
+      "type": "object",
+      "required": [
+        "forbid_real_pii_in_tests",
+        "forbid_pii_in_console_or_logger",
+        "require_dto_projection_for_pii"
+      ],
+      "properties": {
+        "forbid_real_pii_in_tests": {
+          "type": "boolean"
+        },
+        "forbid_pii_in_console_or_logger": {
+          "type": "boolean"
+        },
+        "require_dto_projection_for_pii": {
+          "type": "boolean"
+        },
+        "on_special_category_detected": {
+          "type": "object",
+          "required": [
+            "action",
+            "notification_tag",
+            "message"
+          ],
+          "properties": {
+            "action": {
+              "type": "string"
+            },
+            "notification_tag": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "ci_gates": {
+      "type": "object",
+      "required": [
+        "fail_on_unregistered_pii",
+        "fail_on_pii_in_logs",
+        "fail_on_missing_retention_policy",
+        "generate_ropa_inventory",
+        "output_ropa_file",
+        "output_privacy_report"
+      ],
+      "properties": {
+        "fail_on_unregistered_pii": {
+          "type": "boolean"
+        },
+        "fail_on_pii_in_logs": {
+          "type": "boolean"
+        },
+        "fail_on_missing_retention_policy": {
+          "type": "boolean"
+        },
+        "fail_on_unapproved_subprocessor": {
+          "type": "boolean"
+        },
+        "generate_ropa_inventory": {
+          "type": "boolean"
+        },
+        "output_ropa_file": {
+          "type": "string"
+        },
+        "output_privacy_report": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

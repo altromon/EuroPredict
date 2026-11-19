@@ -1,0 +1,30 @@
+name: AI-SDLC PR KPI Aggregator
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  aggregate-kpis:
+    name: Aggregate PR KPIs & Telemetry
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Calculate and Emit PR KPIs
+        id: kpi
+        run: |
+          npx @aisdlc/cli kpi pr --base origin/${{ github.base_ref }} --head HEAD >> $GITHUB_STEP_SUMMARY

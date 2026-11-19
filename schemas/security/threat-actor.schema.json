@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/security/threat-actor.schema.json",
+  "title": "Threat Actor Schema (Versionable)",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "version",
+    "threat-capability",
+    "motivation"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^ACT-THREAT-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "type": {
+      "type": "string",
+      "const": "threat-actor"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Threat profile semantic version (SemVer)."
+    },
+    "schema-version": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "threat-capability": {
+      "type": "string",
+      "enum": [
+        "script-kiddie",
+        "advanced-persistent-threat",
+        "insider-threat",
+        "automated-botnet",
+        "supply-chain-attacker"
+      ]
+    },
+    "motivation": {
+      "type": "string",
+      "enum": [
+        "financial-gain",
+        "espionage",
+        "sabotage",
+        "data-theft",
+        "reputational-damage"
+      ]
+    },
+    "attack-surfaces": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^ACT-THREAT-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^ACT-THREAT-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    }
+  },
+  "additionalProperties": false
+}

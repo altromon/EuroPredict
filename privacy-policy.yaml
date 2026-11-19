@@ -1,0 +1,45 @@
+# ==============================================================================
+# AI-SDLC: Data Protection & Privacy-by-Design Governance Policy (PDaC)
+# ==============================================================================
+version: "1.0"
+project: "Standard AI-SDLC Project"
+regulatory_frameworks:
+  - "GDPR"
+  - "LOPDGDD"
+  - "ISO-27701"
+default_pii_action: "DENY_UNCLASSIFIED"
+
+classification_levels:
+  PUBLIC:
+    encryption_at_rest: false
+    encryption_in_transit: true
+    allow_in_logs: true
+    allow_in_llm_prompts: true
+  INTERNAL:
+    encryption_at_rest: true
+    encryption_in_transit: true
+    allow_in_logs: true
+    allow_in_llm_prompts: true
+  CONFIDENTIAL_PII:
+    encryption_at_rest: true
+    encryption_in_transit: true
+    allow_in_logs: false
+    masking_in_logs: "HASH_OR_REDACT"
+    allow_in_llm_prompts: false
+    require_retention_policy: true
+    require_erasure_mechanism: true
+  RESTRICTED_SENSITIVE_PII:
+    encryption_at_rest: true
+    field_level_encryption: true
+    encryption_in_transit: true
+    allow_in_logs: false
+    allow_in_llm_prompts: false
+    require_dpia_approval: true
+    require_explicit_consent_or_art9_basis: true
+
+cross_border_transfers:
+  allowed_regions:
+    - "EU"
+    - "EEA"
+  require_scc_for_external: true
+  approved_subprocessors: []

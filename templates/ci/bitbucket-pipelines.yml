@@ -1,0 +1,54 @@
+# ==============================================================================
+# AI-SDLC: Bitbucket Pipelines Template
+# Continuous Quality Gates verification and canonical promotion of SDD changes
+# ==============================================================================
+
+image: node:20
+
+definitions:
+  steps:
+    - step: &build-and-verify
+        name: Quality Gates & Verification
+        script:
+          - corepack enable
+          - corepack prepare pnpm@10 --activate
+          - pnpm config set store-dir $BITBUCKET_CLONE_DIR/.pnpm-store
+          - pnpm install --frozen-lockfile
+          - pnpm approve-builds --all
+          - pnpm run build
+          - npx @aisdlc/cli check
+          - pnpm test
+          - npx @aisdlc/cli verify all
+
+    - step: &sdd-integrate
+        name: SDD Canonical Integration
+        script:
+          - corepack enable
+          - corepack prepare pnpm@10 --activate
+          - pnpm config set store-dir $BITBUCKET_CLONE_DIR/.pnpm-store
+          - pnpm install --frozen-lockfile
+          - pnpm approve-builds --all
+          - pnpm run build
+          - npx @aisdlc/cli sdd integrate --auto || true
+          - |
+            git config user.name "bitbucket-pipelines[bot]"
+            git config user.email "pipelines[bot]@bitbucket.org"
+            git add -A
+            if ! git diff --cached --quiet; then
+              git commit -m "chore(sdd): integrate changes into canonical baseline [skip ci]"
+              git push origin HEAD:$BITBUCKET_BRANCH
+              echo "✔ Canonical integration synchronized in Bitbucket."
+            fi
+
+pipelines:
+  pull-requests:
+    '**':
+      - step: *build-and-verify
+
+  branches:
+    main:
+      - step: *build-and-verify
+      - step: *sdd-integrate
+    'release/*':
+      - step: *build-and-verify
+      - step: *sdd-integrate

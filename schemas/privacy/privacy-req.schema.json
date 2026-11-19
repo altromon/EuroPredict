@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/privacy/privacy-req.schema.json",
+  "title": "Privacy Requirement & Technical Control Schema (PRIV-REQ-*)",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "version",
+    "privacy-principle",
+    "linddun-category",
+    "governs-ropa"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^PRIV-REQ-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "type": {
+      "type": "string",
+      "const": "privacy-requirement"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Privacy requirement semantic version (SemVer)."
+    },
+    "schema-version": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "privacy-principle": {
+      "type": "string",
+      "enum": [
+        "data-minimization",
+        "purpose-limitation",
+        "storage-limitation",
+        "accuracy",
+        "integrity-and-confidentiality",
+        "transparency-and-consent",
+        "data-subject-rights-arco",
+        "pseudonymization-anonymization"
+      ]
+    },
+    "linddun-category": {
+      "type": "string",
+      "enum": [
+        "linkability",
+        "identifiability",
+        "non-repudiation",
+        "detectability",
+        "disclosure-of-information",
+        "unawareness",
+        "non-compliance"
+      ],
+      "description": "LINDDUN privacy threat category mitigated by this control."
+    },
+    "governs-ropa": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^PRIV-ROPA-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Upstream ROPA records (PRIV-ROPA-*) governed by this privacy requirement."
+    },
+    "protects-data-assets": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^DATA-ASSET-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      }
+    },
+    "enforced-in-enclave": {
+      "type": "string",
+      "pattern": "^SEC-ENC-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "compliance-references": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "acceptance-format": {
+      "type": "string",
+      "enum": [
+        "gherkin",
+        "declarative-prose"
+      ]
+    },
+    "cucumber-tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^@[a-zA-Z0-9_-]+$"
+      }
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^PRIV-REQ-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^PRIV-REQ-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    }
+  },
+  "additionalProperties": false
+}

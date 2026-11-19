@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/product/bounded-context.schema.json",
+  "title": "Domain-Driven Design (DDD) Bounded Context Schema",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "version",
+    "domain-type",
+    "responsibilities"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^BC-[A-Z0-9]+(-[A-Z0-9]+)*$",
+      "description": "Immutable Bounded Context identifier (e.g. BC-AI-SDLC-GOVERNANCE)."
+    },
+    "type": {
+      "type": "string",
+      "const": "bounded-context"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Bounded context document semantic version (SemVer)."
+    },
+    "schema-version": {
+      "type": "string",
+      "description": "Template schema version."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3,
+      "description": "Descriptive title of the Bounded Context."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "domain-type": {
+      "type": "string",
+      "enum": [
+        "core",
+        "supporting",
+        "generic"
+      ],
+      "description": "DDD subdomain classification: core differentiator, supporting capability, or generic commodity."
+    },
+    "strategic-classification": {
+      "type": "object",
+      "properties": {
+        "evolutionary-stage": {
+          "type": "string",
+          "enum": [
+            "genesis",
+            "custom-built",
+            "product-rental",
+            "commodity"
+          ]
+        },
+        "business-model-role": {
+          "type": "string",
+          "enum": [
+            "differentiator",
+            "operational",
+            "enabler"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "responsibilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 3
+      },
+      "minItems": 1,
+      "description": "List of functional boundaries and core domain responsibilities encapsulated within this context."
+    },
+    "ubiquitous-language-terms": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^TERM-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Ubiquitous language terms (TERM-*) governed within this bounded context."
+    },
+    "context-mapping": {
+      "type": "object",
+      "properties": {
+        "upstream-dependencies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "downstream-dependents": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "integration-patterns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "pattern": {
+                "type": "string"
+              },
+              "related-context": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "components-involved": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^CMP-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Architecture components (CMP-*) implementing this bounded context."
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^BC-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^BC-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    }
+  },
+  "additionalProperties": false
+}

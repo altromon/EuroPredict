@@ -1,0 +1,33 @@
+---
+description: Directives for code quality, architecture, TDD, and complexity limits
+globs: packages/**, src/**, scripts/**, tests/**
+alwaysApply: false
+---
+
+# Code Quality and Architecture Directives
+
+Canonical Reference: [`process/09_agent_protocols.md`](process/09_agent_protocols.md) and [`process/10_quality_management_and_release_gates.md`](process/10_quality_management_and_release_gates.md).
+
+## 1. Non-Negotiable Quality Thresholds (`quality-policy.yaml`)
+- **Cyclomatic Complexity (CC)**: $\le 10$ per function (warning alert if $> 7$).
+- **Cognitive Complexity**: $\le 15$ per function (warning if $> 10$).
+- **Maintainability Index (MI)**: $\ge 50$ (target minimum $\ge 65$).
+- **Function Length**: $\le 40$ lines (warning if $> 30$).
+- If a function exceeds these limits, decompose logic into cohesive helper functions before completing the task.
+
+## 2. TDD Methodology, Modular & Hexagonal Architecture (Ports & Adapters) & Unit Testing
+- **Mandatory 4-Step Implementation Order**: (1) Define/refine Modular & Hexagonal Architecture (Ports & Adapters) module boundaries, (2) Define interfaces/ports for all inter-module interactions to avoid direct module coupling, (3) Implement components consuming/fulfilling those interfaces, (4) Write unit tests for every function covering Happy Path, Sad Path, Boundary Values, and Unexpected/Null/Empty values.
+- Apply Test-Driven Development: generate unit tests before or alongside component logic.
+- Tag tests linked to requirements with header comments citing the ID (`FR-*`, `SEC-REQ-*`, or `PRIV-REQ-*`) to enable reverse traceability.
+- Suppressing types (`any`), linter rules (`eslint-disable`), or unit tests to force pipeline passage is prohibited.
+- **Mandatory Regression Verification**: Never declare build, typecheck, or bug fixes complete without executing the relevant automated test suite (`pnpm test`, `dotnet test`) and confirming zero regressions.
+- **Global Styles Protection**: When touching or refactoring frontend views, verify that global stylesheet/asset imports remain intact and that layouts suffer no visual disruption.
+- **Skills-First Implementation Directive**: When authoring or refactoring code (especially frontend, UI, styling, accessibility, or framework-specific logic), proactively inspect and leverage available specialized agent skills (e.g., modern web guidance, accessibility a11y, DevTools, framework skills) to produce standard-compliant, modern implementations rather than guessing ad-hoc patterns.
+
+## 3. Open Source License Policy (`license-policy.yaml`)
+- Before adding any dependency to `package.json`, verify its SPDX identifier.
+- Only permissive dependencies are allowed (`MIT`, `Apache-2.0`, `BSD-2/3-Clause`, `ISC`).
+- Viral licenses (`GPL`, `AGPL`) or commercial licenses without approval (`BSL`, `SSPL`) are prohibited.
+
+## 4. Structured Output `--json`
+- Any extension to CLI commands must preserve compatibility with the `--json` flag and suppress ANSI escape codes when this flag is present.

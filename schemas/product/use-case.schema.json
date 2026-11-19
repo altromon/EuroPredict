@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/product/use-case.schema.json",
+  "title": "ProductShape Use Case Schema (Versionable)",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "version",
+    "primary-actor"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^UC-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "type": {
+      "type": "string",
+      "const": "use-case"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Use case semantic version (SemVer)."
+    },
+    "schema-version": {
+      "type": "string",
+      "description": "Template schema version."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "primary-actor": {
+      "type": "string",
+      "pattern": "^ACT-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "supporting-actors": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^ACT-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      }
+    },
+    "governed-by": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^BR-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      }
+    },
+    "uses-terms": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^TERM-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      }
+    },
+    "in-context": {
+      "type": "string",
+      "pattern": "^BC-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "alternative-flows": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      },
+      "description": "Declared alternative flows that must be covered by tests."
+    },
+    "exception-flows": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string",
+            "minLength": 1
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      },
+      "description": "Declared exception flows that must be covered by tests."
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^UC-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^UC-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    }
+  },
+  "additionalProperties": false
+}

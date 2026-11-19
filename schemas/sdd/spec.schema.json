@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/sdd/spec.schema.json",
+  "title": "Spec-Driven Development Delivery Specification Schema (SPEC-*)",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "change-id"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^SPEC-(CHG|FEAT|PATCH)-[A-Z0-9]+(-[A-Z0-9]+)*$",
+      "description": "Unique identifier of the delivery specification."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "delivery-spec",
+        "spec"
+      ]
+    },
+    "change-id": {
+      "type": "string",
+      "pattern": "^(CHG|FEAT|PATCH)-[A-Z0-9]+(-[A-Z0-9]+)*$",
+      "description": "Parent change identifier associated with this specification."
+    },
+    "profile": {
+      "type": "string",
+      "enum": [
+        "patch",
+        "standard",
+        "critical"
+      ],
+      "description": "Risk and governance profile of the change."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Semantic versioning (SemVer)."
+    },
+    "schema-version": {
+      "type": "string"
+    },
+    "handoff": {
+      "type": "string",
+      "description": "Associated handoff sidecar reference."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "proposed",
+        "review",
+        "approved",
+        "active",
+        "completed",
+        "deprecated"
+      ]
+    },
+    "verification": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "command": {
+          "type": "string"
+        },
+        "target": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "citations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "digest": {
+            "type": "string"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "anchor": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "acceptance-format": {
+      "type": "string",
+      "enum": [
+        "gherkin"
+      ],
+      "description": "Formato de aceptación BDD obligatorio para especificaciones de entrega SDD."
+    },
+    "cucumber-tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^@[a-zA-Z0-9_-]+$"
+      },
+      "description": "Etiquetas de trazabilidad BDD para ejecución con Cucumber."
+    },
+    "cucumber-feature-file": {
+      "type": "string",
+      "description": "Ruta personalizada de extracción del archivo .feature para Cucumber."
+    }
+  },
+  "additionalProperties": false
+}

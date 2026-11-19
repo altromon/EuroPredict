@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/architecture/introduction-and-goals.schema.json",
+  "title": "NAF v4 Enterprise & Capability / arc42 Introduction and System Goals Schema",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "version",
+    "naf-perspective",
+    "cites-product-actors",
+    "cites-quality-goals",
+    "cites-journeys"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^ARCH-INTRO-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "type": {
+      "type": "string",
+      "const": "architecture-introduction"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Artifact semantic version (SemVer)."
+    },
+    "schema-version": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "proposed",
+        "accepted",
+        "approved",
+        "deprecated",
+        "superseded"
+      ]
+    },
+    "owner": {
+      "type": "string"
+    },
+    "arc42-section": {
+      "type": "integer",
+      "const": 1
+    },
+    "naf-perspective": {
+      "type": "string",
+      "const": "Enterprise & Capability"
+    },
+    "cites-product-actors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^ACT-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      }
+    },
+    "cites-quality-goals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^(QR|SEC-REQ|PRIV-REQ)-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      }
+    },
+    "cites-journeys": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^JRN-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Product journey identifiers (JRN-*) envisioned in this system capability scope."
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^ARCH-INTRO-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^ARCH-INTRO-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    }
+  },
+  "additionalProperties": false
+}

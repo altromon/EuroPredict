@@ -1,0 +1,39 @@
+name: CI - AI-SDLC Quality Gates & Testing
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  verify-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET SDKs
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            3.1.x
+            8.0.x
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Restore .NET Dependencies
+        run: dotnet restore EuroPredict/EuroPredict.sln
+
+      - name: Build .NET Solution
+        run: dotnet build EuroPredict/EuroPredict.sln --no-restore --configuration Release
+
+      - name: Run .NET Unit & Integration Tests
+        run: dotnet test EuroPredict/EuroPredict.sln --no-build --configuration Release
+
+      - name: AI-SDLC Quality Gate & Full Verification
+        run: npx @aisdlc/cli verify all

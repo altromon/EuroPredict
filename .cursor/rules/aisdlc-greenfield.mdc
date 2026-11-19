@@ -1,0 +1,80 @@
+---
+description: aisdlc-greenfield (Greenfield Project Inception & Delivery Playbook) - Orchestrate end-to-end AI-SDLC onboarding and Phase 0 Inception for brand-new (Greenfield) projects, from repository initialization (aisdlc init) and NAF v4 Vision (ARCH-INTRO-*) through ProductShape, STRIDE Threat Modeling, arc42 Architecture, 2-checkpoint transversal auditor/adversary verification, and topological wave SDD delivery.
+globs: product/**, specs/product/**, architecture/**, templates/**
+alwaysApply: false
+---
+
+# aisdlc-greenfield (Greenfield Project Inception & Delivery Playbook)
+
+Canonical Reference: [`process/02_product_definition.md`](../../process/02_product_definition.md), [`process/04b_data_protection_and_privacy.md`](../../process/04b_data_protection_and_privacy.md), [`process/05_architecture_arc42_nafv4.md`](../../process/05_architecture_arc42_nafv4.md), [`process/06_spec_driven_development.md`](../../process/06_spec_driven_development.md), and [`process/09_agent_protocols.md`](../../process/09_agent_protocols.md).
+
+## Purpose & Trigger
+Use this skill when starting a **brand-new software project from scratch (Greenfield)** or when `specs/product/` has no canonical baseline yet. It coordinates the sequential execution of AI-SDLC MCP/CLI tools and specialized role agents so no code is written before product vision, security enclaves, privacy-by-design controls, and architecture contracts exist.
+
+## Consolidated Inception Quality & Adversarial Checkpoint
+Across Phase 0 and Inception, quality auditing and adversarial stress-testing are concentrated at the completion of Inception design (or after product shaping):
+- **Concurrent Inspection**: Concurrently invoke [`agent-auditor`](../agent-auditor/SKILL.md) (evaluating YAGNI, structural debt, and simplification) and [`agent-adversary`](../agent-adversary/SKILL.md) (stress-testing logic traps, SPOFs, attack vectors, or broken invariants) in clean, isolated context windows.
+- **Non-Invasive Review**: Neither auditor nor adversary modifies deliverables directly; both deliver structured reports citing canonical IDs and SHA-256 digests.
+- **Consolidated Remediation**: Consolidate findings and emit the Workflow Handoff back to authoring agents to resolve blocking defects and apply simplifications (max 2 correction rounds).
+- **Anti-Ping-Pong Guardrail**: Bounded strictly to maximum **1 correction round**. If non-blocking advisories remain, proceed to the downstream phase; if blocking defects persist, escalate immediately to the Human Tech Lead.
+
+## End-to-End Execution Playbook
+
+### Step 1: Branch-Before-Change, Pre-Change Draft PR & Repository Initialization
+1. **Branch-Before-Change & Pre-Change Draft PR/MR**: Verify the active branch (`git branch --show-current`). If currently on a protected branch (`main`, `master`, `release/*`), create and switch to an inception branch (e.g., `feat/inception-baseline` or `chore/aisdlc-inception`) **before** modifying or creating any files. Whenever a remote repository is configured (`git remote`), check if an open PR/MR exists for the branch (`gh pr view` / `gh pr list --head <branch>` on GitHub; `glab mr view` / `glab mr list --source-branch <branch>` on GitLab); if none exists, create an empty bootstrap commit (`git commit --allow-empty -m "chore(inception): open draft PR"`), push (`git push -u origin <branch>`), and open a **Draft PR/MR** (`gh pr create --draft` on GitHub; `glab mr create --draft` or `git push -o merge_request.create -o merge_request.draft` on GitLab) before making any changes (if no remote exists, work locally).
+2. If the workspace has not been initialized with AI-SDLC schemas, policies, and templates, run MCP tool `new` (or CLI `npx @aisdlc/cli init`).
+3. Install the Git telemetry hook via `npx aisdlc git hook install` (`pnpm run git:hook:install`).
+4. Verify `quality-policy.yaml`, `license-policy.yaml`, and `privacy-policy.yaml` are present in the repository root.
+5. Commit and push (`git push`) Phase 0 Inception artifacts (`ARCH-INTRO-001`, ProductShape, Threat/Privacy, Architecture) incrementally to the open Draft PR.
+
+### Step 2: Phase 0 Product Inception (`agent-product-analyst`)
+1. Delegate to or adopt [`agent-product-analyst`](../agent-product-analyst/SKILL.md).
+2. **Iterative Discovery Interview (Up to 15 Questions or Until Product Scope is 100% Clear)**: Before generating artifacts, clarify with the human Product Owner in rounds of 3–5 questions:
+   - Core mission statement and business problem.
+   - Primary actors (`ACT-*`) and external systems.
+   - **Target Interaction & Presentation Modality (`CON-*` / `ARCH-INTRO-001`)**: Explicitly define at inception how human actors will interact with the MVP (e.g., **Web UI**, **Desktop GUI**, **Interactive Console/TUI/CLI**, **Mobile App**, or **Headless API/SDK** if actors are exclusively external systems). Never assume a headless class library when human actors exist.
+   - **Delivery & Deployment Model (`ARCH-INTRO-001` / `CON-*` / `QR-*`)**: Clarify in business terms how the product will be delivered and operated (Cloud SaaS, Self-Hosted/On-Premise, Local Desktop/CLI binary, or Library/SDK package) along with any data-residency or availability requirements.
+   - **Modern Aesthetic & Design System Standard (`CON-UI-*` / `ARCH-INTRO-001`)**: Explicitly define a modern, visually attractive styling standard adapted to the chosen presentation modality: (1) **Web UI**: modern responsive layouts using Bootstrap 5 utility classes and components (`card`, `table table-hover`, `badge`, `alert alert-*`, responsive grid) or modern equivalents, (2) **Desktop GUI**: modern clean design (rounded corners, elevated panels, padding, consistent typography) avoiding raw legacy unstyled windows, (3) **Console / TUI**: rich terminal interface with ANSI colors, status badges, formatted tables, and progress indicators (e.g., Spectre.Console, Rich, Ink, or Chalk/Picocolors).
+   - **User Journeys (`JRN-*`) to Generate (Plain-Language Elicitation)**: Ask in simple, everyday language which end-to-end user journeys to model, explicitly indicating the 5 pieces of information needed to build each journey properly: (1) protagonist user (`persona` / `ACT-*`) and their main goal, (2) step-by-step stages from start to finish (`stages`), (3) interaction screens/channels at each stage (`touchpoints`), (4) current obstacles or pain points (`pain-points`), and (5) concrete system capabilities/use cases (`related-use-cases` / `UC-*`).
+   - Essential MVP capabilities (`UC-*`) vs. future roadmap, ensuring **foundational entity CRUD / master data workflows** are explicitly included in the MVP.
+   - Top 3–5 quality goals (`QR-*`) and regulatory/technical constraints (`CON-*`).
+3. **Enterprise & Capability Vision**: Create `specs/architecture/ARCH-INTRO-001.md` (`status: draft`, `naf-perspective: "Enterprise & Capability"`) using `templates/architecture/introduction-and-goals.template.md`, explicitly recording the chosen presentation/UI modality.
+4. **ProductShape Baseline**: Derive initial draft artifacts in `specs/product/`:
+   - Actors (`ACT-*`), User Journeys (`JRN-*`), Use Cases (`UC-*`), Business Rules (`BR-*`), Functional Requirements (`FR-*` with mandatory `@nominal`, `@boundary`, `@invalid` Gherkin blocks), and Quality Requirements (`QR-*`).
+   - **Vertical Slice Completeness Rule**: Every human-triggered `UC-*` in the MVP must specify observable user interaction through the agreed presentation modality and state persistence.
+5. Validate schemas and duplicates via MCP tools `verify_schemas` and `verify_duplicates` (or `npx aisdlc check --fix`).
+6. **Mandatory Upstream UX & MVP Boundary Gate (`agent-expert-user`)**: Invoke [`agent-expert-user`](../agent-expert-user/SKILL.md) in **Design Mode** to stress-test the proposed workflows, enforce strict MVP boundaries, reject any headless/library-only MVP when human actors exist, verify master-data CRUD prerequisites, and separate core MVP `UC-*` from future roadmap backlog.
+
+### Step 3: Shift-Left Cybersecurity & Privacy-by-Design (`agent-threat-modeler` ➔ `agent-privacy-officer`)
+1. Delegate to or adopt [`agent-threat-modeler`](../agent-threat-modeler/SKILL.md).
+2. Analyze every `UC-*` and `FR-*` using STRIDE and OWASP ASVS to create in `specs/security/`:
+   - Threat Actors (`ACT-THREAT-*`), Abuse Cases (`ABUSE-*` targeting `UC-*`), and Security Requirements (`SEC-REQ-*` with `@security @mitigation` negative Gherkin scenarios and `SEC-ENC-*` Zero Trust enclave bindings).
+3. Hand off to [`agent-privacy-officer`](../agent-privacy-officer/SKILL.md) to apply LINDDUN and GDPR/LOPDGDD/ISO 27701 in `specs/privacy/`:
+   - Personal Data Assets (`DATA-ASSET-*`), GDPR Art. 30 Records of Processing (`PRIV-ROPA-*`), and Privacy Requirements (`PRIV-REQ-*` with `@privacy @gdpr` Gherkin scenarios).
+4. Run `verify_schemas` and `verify_privacy` (`npx aisdlc verify privacy`).
+
+### Step 4: Modular Systems Architecture (`agent-system-architect`)
+1. Delegate to or adopt [`agent-system-architect`](../agent-system-architect/SKILL.md).
+2. Define building blocks (`CMP-*`), Deployment Topology (`ARCH-DEP-001` translating the delivery model into execution nodes `RES-*` and enclaves `SEC-ENC-*`), and Architectural Decision Records (`ADR-*`) in `specs/architecture/` using `templates/architecture/`, ensuring every `CMP-*` cites `implements-use-cases` (`UC-*`) and `satisfies-requirements` (`FR-*`, `QR-*`, `SEC-REQ-*`, `PRIV-REQ-*`).
+3. Inspect third-party stack choices against `license-policy.yaml` via `verify_licenses` and subprocessors against `privacy-policy.yaml` via `verify_privacy`.
+4. **Technical Security & Privacy Feedback Loop**: If new infrastructure, persistence, LLM, or auth decisions introduce attack vectors or PII flows, return to `agent-threat-modeler` ➔ `agent-privacy-officer` to add technical mitigations before coding.
+
+### Checkpoint 1 (Inception Design Checkpoint): `agent-auditor` $\parallel$ `agent-adversary`
+1. Concurrently invoke `agent-auditor` (evaluating YAGNI, architecture bloat, interface contracts) and `agent-adversary` (simulating SPOFs, race conditions, unhandled threat scenarios) in isolated context windows over all Phase 0 deliverables.
+2. Consolidate findings and remediate in authoring agents (max 2 correction rounds), committing and pushing (`git push`) updates to the Draft PR.
+3. **Human Approval Gate**: Mark the Inception Draft PR/MR ready (`gh pr ready` / `glab mr update --ready`) and present the comprehensive Inception model for Human PO & Tech Lead sign-off.
+
+### Step 5: Release Milestone & Topological Wave SDD Plan (`1 UC-* = 1 CHG-*`)
+1. **Open Release Milestone (`Tier 2: release/v1.0.0` or Streamlined `main`)**: Group approved MVP Use Cases (`UC-001`, `UC-002`, ...) and visualize execution plan.
+2. **Decompose into Topological Waves (DAG Parallelism)**:
+   - **Wave 0 — Foundational Core, Executable Presentation Host & CI/CD (`agent-devops`) (Sequential)**: Scaffold `CHG-001` via [`aisdlc-increment`](../aisdlc-increment/SKILL.md) to establish domain core, shared contracts, auth/config, and the runnable presentation host. Invoke [`agent-devops`](../agent-devops/SKILL.md) to clarify the technical CI/CD & packaging strategy (CI Quality Gates, Docker/GHCR, package registry, or PaaS/Cloud) and scaffold `.github/workflows/` and container manifests without modifying `src/`.
+   - **Waves 1..N — Orthogonal End-to-End Vertical Slices (Parallel Multi-Agent)**: Once Wave 0 contracts are merged, execute independent `CHG-*` increments (`1 UC-* = 1 CHG-*`) in parallel across isolated branches/worktrees (`feat/CHG-002`, `feat/CHG-003`, ...).
+3. **Release Consolidation (`agent-devops`)**: Once all MVP increments are integrated (`sdd_integrate`), run `verify` (`npx aisdlc verify all`), generate SBOM, compute release KPIs (`kpi_release`), regenerate canonical reports and dashboard (`report_quality`, `report_dashboard`), verify release/publishing workflows via `agent-devops`, and open the Release PR for final human approval and SemVer tagging (`v1.0.0`). Individual `feat/CHG-*` PRs must compute reports locally without committing global `reports/` files to avoid merge conflicts.
+
+## Non-Negotiable Guardrails
+- **Clean Context Window Isolation per Specialist Agent (Cross-IDE)**: Never execute two distinct specialist roles in the same conversation context window. Always spawn each specialist in a fresh isolated subagent context that reads state strictly from disk.
+- **2-Checkpoint Quality & Adversarial Protocol**: Quality auditing and adversarial testing are concentrated at the completion of Inception design and Pre-PR implementation, avoiding micro-step overhead.
+- **FORBIDDEN Library-Only MVP for Human-Facing Products**: Whenever a product defines human actors (`ACT-*`), no agent may scope the MVP as headless class libraries without an executable presentation host.
+- **FORBIDDEN Greenfield Monolith (`1 UC-* = 1 CHG-*`)**: Never bundle the entire product or multiple `UC-*` into a single SDD change (`CHG-001`). Parallelism is achieved by running **multiple bounded `CHG-*` concurrently** on separate branches/worktrees.
+- Never invoke `sdd_change_new` or write application code in `src/` on a Greenfield project before `ARCH-INTRO-001`, `agent-expert-user` MVP validation, and at least one `UC-*` and `FR-*` exist.
+- All newly drafted specifications must start with `status: draft`.

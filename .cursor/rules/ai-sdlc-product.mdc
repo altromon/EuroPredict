@@ -1,0 +1,32 @@
+---
+description: Directives for SDD specifications editing, ProductShape artifacts, Cybersecurity, and Privacy
+globs: specs/**, templates/**, product/**, security/**, privacy/**
+alwaysApply: false
+---
+
+# Product and SDD Specification Directives
+
+Canonical Reference: [`process/09_agent_protocols.md`](process/09_agent_protocols.md) and [`process/02_product_definition.md`](process/02_product_definition.md).
+
+## 1. Identifier Taxonomy and JSON Schemas
+Every generated or modified artifact must follow canonical naming and satisfy its schema in `schemas/`:
+- Enterprise & Capability Vision (Phase 0): `ARCH-INTRO-[NUM3]` (`schemas/architecture/introduction-and-goals.schema.json`)
+- Product Actors: `ACT-[SUFFIX]` (`schemas/product/actor.schema.json`)
+- Use Cases: `UC-[SUFFIX]` (`schemas/product/use-case.schema.json`)
+- Functional Requirements: `FR-[SUFFIX]-[NUM3]` (`schemas/product/requirement.schema.json`)
+- Quality Requirements: `QR-[SUFFIX]` (`schemas/product/requirement.schema.json`)
+- Business Rules: `BR-[SUFFIX]` (`schemas/product/business-rule.schema.json`)
+- Threat Actors: `ACT-THREAT-[SUFFIX]` (`schemas/security/threat-actor.schema.json`)
+- Abuse Cases: `ABUSE-[SUFFIX]` (`schemas/security/abuse-case.schema.json`)
+- Security Requirements: `SEC-REQ-[SUFFIX]` (`schemas/security/security-req.schema.json`)
+- Data Assets: `DATA-ASSET-[SUFFIX]` (`schemas/privacy/data-asset.schema.json`)
+- Processing Activities (ROPA): `PRIV-ROPA-[SUFFIX]` (`schemas/privacy/privacy-ropa.schema.json`)
+- Privacy Requirements: `PRIV-REQ-[SUFFIX]` (`schemas/privacy/privacy-req.schema.json`)
+
+## 2. "AI as Scribe" Protocol Rules
+- **Phase 0 (New Product Inception)**: When starting a new product, conduct an iterative discovery interview of up to 15 questions (or until the product scope and target UI modality — Web, Desktop, Console/CLI, Mobile, or API/SDK — are completely clear), instantiate `ARCH-INTRO-001` (`naf-perspective: "Enterprise & Capability"`) in `draft`, and derive `ACT-*`, `UC-*`, `BR-*`, `FR-*`, and `QR-*` (including runnable UI/CLI requirements and master-entity CRUD prerequisites when human actors exist).
+- **Initial Status**: Every new artifact strictly starts with `status: draft`. Creating artifacts directly as `active` or `approved` is forbidden.
+- **Gherkin Acceptance Criteria**: In every `FR-*` requirement, include a ```gherkin block with tags `@<ID> @automated @regression` and at least one `Scenario Outline` with an `Examples` data table.
+- **Security & Privacy Mitigations**: Every `SEC-REQ-*` must include negative Gherkin tests (`@security @mitigation`) and every `PRIV-REQ-*` must include Gherkin privacy scenarios (`@privacy @gdpr`).
+- **Use Cases (User Story Structure)**: In every `UC-*`, the `1. Intent and Outcome` section must be written using the standard English structure: `As a <ACT-ID>... I want <action>... To <outcome>...`.
+- **Deterministic Validation**: Run `pnpm run verify:schemas`, `pnpm run verify:duplicates`, and `pnpm run verify:privacy` before presenting the draft to the human reviewer.
