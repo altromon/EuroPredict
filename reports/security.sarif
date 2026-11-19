@@ -1,0 +1,453 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "aisdlc-security",
+          "version": "2.2.0",
+          "informationUri": "https://github.com/altromon/AI-SDLC",
+          "rules": [
+            {
+              "id": "SAST-001-SQL-INJECTION",
+              "name": "SQL_INJECTION",
+              "shortDescription": {
+                "text": "Concatenación o interpolación directa de variables en consulta SQL dinámica"
+              },
+              "fullDescription": {
+                "text": "Concatenación o interpolación directa de variables en consulta SQL dinámica"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "sast"
+                ],
+                "cwe": [
+                  "CWE-89"
+                ],
+                "owasp": [
+                  "A03:2021-Injection"
+                ]
+              }
+            },
+            {
+              "id": "SAST-002-COMMAND-INJECTION",
+              "name": "COMMAND_INJECTION",
+              "shortDescription": {
+                "text": "Ejecución dinámica de comandos del sistema operativo con argumentos variables"
+              },
+              "fullDescription": {
+                "text": "Ejecución dinámica de comandos del sistema operativo con argumentos variables"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "sast"
+                ],
+                "cwe": [
+                  "CWE-78"
+                ],
+                "owasp": [
+                  "A03:2021-Injection"
+                ]
+              }
+            },
+            {
+              "id": "SAST-003-UNSAFE-EVAL",
+              "name": "UNSAFE_EVAL",
+              "shortDescription": {
+                "text": "Uso de evaluación dinámica de código (eval o Function constructor)"
+              },
+              "fullDescription": {
+                "text": "Uso de evaluación dinámica de código (eval o Function constructor)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "sast"
+                ],
+                "cwe": [
+                  "CWE-95"
+                ],
+                "owasp": [
+                  "A03:2021-Injection"
+                ]
+              }
+            },
+            {
+              "id": "SAST-004-SSRF-UNVALIDATED-FETCH",
+              "name": "SSRF",
+              "shortDescription": {
+                "text": "Petición de red saliente (fetch/http/axios) con URL dinámica sin validación previa"
+              },
+              "fullDescription": {
+                "text": "Petición de red saliente (fetch/http/axios) con URL dinámica sin validación previa"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "sast"
+                ],
+                "cwe": [
+                  "CWE-918"
+                ],
+                "owasp": [
+                  "A10:2021-Server-Side Request Forgery (SSRF)"
+                ]
+              }
+            },
+            {
+              "id": "SAST-005-PATH-TRAVERSAL",
+              "name": "PATH_TRAVERSAL",
+              "shortDescription": {
+                "text": "Lectura o escritura en sistema de archivos construida directamente desde parámetros no saneados"
+              },
+              "fullDescription": {
+                "text": "Lectura o escritura en sistema de archivos construida directamente desde parámetros no saneados"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "sast"
+                ],
+                "cwe": [
+                  "CWE-22"
+                ],
+                "owasp": [
+                  "A01:2021-Broken Access Control"
+                ]
+              }
+            },
+            {
+              "id": "SAST-006-PROMPT-INJECTION-CONCAT",
+              "name": "PROMPT_INJECTION_RISK",
+              "shortDescription": {
+                "text": "Interpolación o concatenación directa de entradas de usuario en llamadas a LLM o plantillas de prompts sin delimitación defensiva (OWASP LLM01)"
+              },
+              "fullDescription": {
+                "text": "Interpolación o concatenación directa de entradas de usuario en llamadas a LLM o plantillas de prompts sin delimitación defensiva (OWASP LLM01)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "sast"
+                ],
+                "cwe": [
+                  "CWE-77"
+                ],
+                "owasp": [
+                  "LLM01:2023-Prompt Injection"
+                ]
+              }
+            },
+            {
+              "id": "SAST-007-PROMPT-INJECTION-JAILBREAK",
+              "name": "PROMPT_INJECTION_RISK",
+              "shortDescription": {
+                "text": "Firma o vector adversarial de inyección de prompt o anulación de directivas de sistema (Jailbreak / Inyección LLM01)"
+              },
+              "fullDescription": {
+                "text": "Firma o vector adversarial de inyección de prompt o anulación de directivas de sistema (Jailbreak / Inyección LLM01)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "sast"
+                ],
+                "cwe": [
+                  "CWE-77"
+                ],
+                "owasp": [
+                  "LLM01:2023-Prompt Injection"
+                ]
+              }
+            },
+            {
+              "id": "SEC-001-PRIVATE-KEY",
+              "name": "PRIVATE_KEY",
+              "shortDescription": {
+                "text": "Bloque de clave privada detectado (PEM / RSA / DSA / EC / OPENSSH)"
+              },
+              "fullDescription": {
+                "text": "Bloque de clave privada detectado (PEM / RSA / DSA / EC / OPENSSH)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "secrets",
+                  "credentials"
+                ],
+                "cwe": [
+                  "CWE-798"
+                ],
+                "owasp": [
+                  "A07:2021-Identification and Authentication Failures"
+                ]
+              }
+            },
+            {
+              "id": "SEC-002-AWS-ACCESS-KEY",
+              "name": "AWS_CREDENTIAL",
+              "shortDescription": {
+                "text": "Identificador de clave de acceso AWS (AKIA...)"
+              },
+              "fullDescription": {
+                "text": "Identificador de clave de acceso AWS (AKIA...)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "secrets",
+                  "credentials"
+                ],
+                "cwe": [
+                  "CWE-798"
+                ],
+                "owasp": [
+                  "A07:2021-Identification and Authentication Failures"
+                ]
+              }
+            },
+            {
+              "id": "SEC-003-AWS-SECRET-KEY",
+              "name": "AWS_CREDENTIAL",
+              "shortDescription": {
+                "text": "Clave secreta de acceso AWS asignada en código"
+              },
+              "fullDescription": {
+                "text": "Clave secreta de acceso AWS asignada en código"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "secrets",
+                  "credentials"
+                ],
+                "cwe": [
+                  "CWE-798"
+                ],
+                "owasp": [
+                  "A07:2021-Identification and Authentication Failures"
+                ]
+              }
+            },
+            {
+              "id": "SEC-004-GITHUB-TOKEN",
+              "name": "GITHUB_TOKEN",
+              "shortDescription": {
+                "text": "Token de autenticación personal o de aplicación de GitHub (ghp_, github_pat_, etc.)"
+              },
+              "fullDescription": {
+                "text": "Token de autenticación personal o de aplicación de GitHub (ghp_, github_pat_, etc.)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "secrets",
+                  "credentials"
+                ],
+                "cwe": [
+                  "CWE-798"
+                ],
+                "owasp": [
+                  "A07:2021-Identification and Authentication Failures"
+                ]
+              }
+            },
+            {
+              "id": "SEC-005-SLACK-TOKEN",
+              "name": "SLACK_TOKEN",
+              "shortDescription": {
+                "text": "Token de bot o webhook de Slack (xox[baprs]-...)"
+              },
+              "fullDescription": {
+                "text": "Token de bot o webhook de Slack (xox[baprs]-...)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "secrets",
+                  "credentials"
+                ],
+                "cwe": [
+                  "CWE-798"
+                ],
+                "owasp": [
+                  "A07:2021-Identification and Authentication Failures"
+                ]
+              }
+            },
+            {
+              "id": "SEC-006-GOOGLE-API-KEY",
+              "name": "GOOGLE_API_KEY",
+              "shortDescription": {
+                "text": "Clave de API de Google Cloud Platform (AIza...)"
+              },
+              "fullDescription": {
+                "text": "Clave de API de Google Cloud Platform (AIza...)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "secrets",
+                  "credentials"
+                ],
+                "cwe": [
+                  "CWE-798"
+                ],
+                "owasp": [
+                  "A07:2021-Identification and Authentication Failures"
+                ]
+              }
+            },
+            {
+              "id": "SEC-007-OPENAI-API-KEY",
+              "name": "OPENAI_API_KEY",
+              "shortDescription": {
+                "text": "Clave de API de OpenAI / Azure OpenAI (sk-...)"
+              },
+              "fullDescription": {
+                "text": "Clave de API de OpenAI / Azure OpenAI (sk-...)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "secrets",
+                  "credentials"
+                ],
+                "cwe": [
+                  "CWE-798"
+                ],
+                "owasp": [
+                  "A07:2021-Identification and Authentication Failures"
+                ]
+              }
+            },
+            {
+              "id": "SEC-008-STRIPE-API-KEY",
+              "name": "STRIPE_API_KEY",
+              "shortDescription": {
+                "text": "Clave secreta de API de Stripe (sk_live_... / rk_live_...)"
+              },
+              "fullDescription": {
+                "text": "Clave secreta de API de Stripe (sk_live_... / rk_live_...)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "secrets",
+                  "credentials"
+                ],
+                "cwe": [
+                  "CWE-798"
+                ],
+                "owasp": [
+                  "A07:2021-Identification and Authentication Failures"
+                ]
+              }
+            },
+            {
+              "id": "SEC-009-JWT-TOKEN",
+              "name": "JWT_TOKEN",
+              "shortDescription": {
+                "text": "Token JSON Web Token (JWT) con firma criptográfica en texto plano"
+              },
+              "fullDescription": {
+                "text": "Token JSON Web Token (JWT) con firma criptográfica en texto plano"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "secrets",
+                  "credentials"
+                ],
+                "cwe": [
+                  "CWE-798"
+                ],
+                "owasp": [
+                  "A07:2021-Identification and Authentication Failures"
+                ]
+              }
+            },
+            {
+              "id": "SEC-010-GENERIC-SECRET",
+              "name": "GENERIC_HIGH_ENTROPY_SECRET",
+              "shortDescription": {
+                "text": "Asignación de credencial o contraseña genérica con alta entropía de Shannon"
+              },
+              "fullDescription": {
+                "text": "Asignación de credencial o contraseña genérica con alta entropía de Shannon"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "properties": {
+                "tags": [
+                  "security",
+                  "secrets",
+                  "credentials"
+                ],
+                "cwe": [
+                  "CWE-798"
+                ],
+                "owasp": [
+                  "A07:2021-Identification and Authentication Failures"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "results": []
+    }
+  ]
+}
