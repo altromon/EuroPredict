@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/sdd/release-kpis.schema.json",
+  "title": "Release Consolidated KPIs & Attribution Telemetry Schema",
+  "type": "object",
+  "required": [
+    "releaseBranch",
+    "baseBranch",
+    "generatedAt",
+    "totalCommits",
+    "totalLinesAdded",
+    "totalLinesDeleted",
+    "totalKloc",
+    "totalBugs",
+    "globalDefectDensity",
+    "totalTimeSeconds",
+    "totalTokens",
+    "totalCostUsd",
+    "authorStats",
+    "bugList"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(KPI-REL|REL-KPI)-[A-Z0-9]+(-[A-Z0-9]+)*$",
+      "description": "Optional artifact identifier."
+    },
+    "type": {
+      "type": "string",
+      "const": "release-kpis"
+    },
+    "releaseBranch": {
+      "type": "string"
+    },
+    "baseBranch": {
+      "type": "string"
+    },
+    "generatedAt": {
+      "type": "string"
+    },
+    "totalCommits": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "totalLinesAdded": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "totalLinesDeleted": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "totalKloc": {
+      "type": "number",
+      "minimum": 0
+    },
+    "totalBugs": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "globalDefectDensity": {
+      "type": "number",
+      "minimum": 0
+    },
+    "totalTimeSeconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "totalTokens": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "totalCostUsd": {
+      "type": "number",
+      "minimum": 0
+    },
+    "reworkTimeSeconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "reworkTokens": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "reworkCostUsd": {
+      "type": "number",
+      "minimum": 0
+    },
+    "reworkTimePercent": {
+      "type": "number",
+      "minimum": 0
+    },
+    "reworkTokensPercent": {
+      "type": "number",
+      "minimum": 0
+    },
+    "reworkCostPercent": {
+      "type": "number",
+      "minimum": 0
+    },
+    "authorStats": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "authorOrModel",
+          "isAgent",
+          "commits",
+          "linesAdded",
+          "linesDeleted",
+          "klocProduced",
+          "bugsInjected",
+          "defectInjectionRate",
+          "totalTimeSeconds",
+          "totalTokens",
+          "estimatedCostUsd"
+        ],
+        "properties": {
+          "authorOrModel": {
+            "type": "string"
+          },
+          "isAgent": {
+            "type": "boolean"
+          },
+          "commits": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "linesAdded": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "linesDeleted": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "klocProduced": {
+            "type": "number",
+            "minimum": 0
+          },
+          "bugsInjected": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "defectInjectionRate": {
+            "type": "number",
+            "minimum": 0
+          },
+          "totalTimeSeconds": {
+            "type": "number",
+            "minimum": 0
+          },
+          "totalTokens": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "estimatedCostUsd": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "bugList": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "sha",
+          "subject",
+          "author",
+          "timeSeconds",
+          "tokens"
+        ],
+        "properties": {
+          "sha": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "parentRef": {
+            "type": "string"
+          },
+          "timeSeconds": {
+            "type": "number",
+            "minimum": 0
+          },
+          "tokens": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

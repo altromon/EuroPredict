@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/security/abuse-case.schema.json",
+  "title": "Abuse Case Schema (Versionable)",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "version",
+    "primary-threat-actor",
+    "targets-use-case",
+    "stride-category",
+    "mitigated-by"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^ABUSE-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "type": {
+      "type": "string",
+      "const": "abuse-case"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Abuse case semantic version (SemVer)."
+    },
+    "schema-version": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "primary-threat-actor": {
+      "type": "string",
+      "pattern": "^ACT-THREAT-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "targets-use-case": {
+      "type": "string",
+      "pattern": "^UC-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "stride-category": {
+      "type": "string",
+      "enum": [
+        "spoofing",
+        "tampering",
+        "repudiation",
+        "information-disclosure",
+        "denial-of-service",
+        "elevation-of-privilege"
+      ]
+    },
+    "mitigated-by": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^SEC-REQ-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      }
+    },
+    "asvs-controls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^ABUSE-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^ABUSE-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    }
+  },
+  "additionalProperties": false
+}

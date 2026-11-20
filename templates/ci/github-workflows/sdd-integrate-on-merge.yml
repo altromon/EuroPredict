@@ -1,0 +1,97 @@
+name: SDD Canonical Integration on Merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+      - 'release/**'
+  workflow_dispatch:
+    inputs:
+      change_id:
+        description: 'SDD change ID to integrate manually (e.g. chg-001-telemetry)'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: sdd-integrate-${{ github.event.pull_request.base.ref || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  integrate-sdd:
+    name: SDD Canonical Integration
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.ref || github.ref_name }}
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm approve-builds --all
+
+      - name: Build Packages
+        run: pnpm run build
+
+      - name: Detect and Integrate SDD Change
+        id: integrate
+        env:
+          PR_HEAD_REF: ${{ github.event.pull_request.head.ref }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          PR_BODY: ${{ github.event.pull_request.body }}
+          MANUAL_CHANGE_ID: ${{ github.event.inputs.change_id }}
+        run: |
+          npx @aisdlc/cli sdd integrate --auto || true
+
+      - name: Commit and Push Canonical Baseline Changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(sdd): integrate changes into canonical baseline [skip ci]"
+            TARGET_BRANCH="${{ github.event.pull_request.base.ref || github.ref_name }}"
+            MAX_RETRIES=3
+            RETRY_COUNT=0
+            DELAY=2
+
+            while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+              echo "Synchronizing with remote branch $TARGET_BRANCH (pull --rebase)..."
+              git pull --rebase origin "$TARGET_BRANCH"
+              if git push origin "$TARGET_BRANCH"; then
+                echo "✔ Canonical integration committed and synchronized to repository."
+                exit 0
+              fi
+              RETRY_COUNT=$((RETRY_COUNT + 1))
+              if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+                echo "⚠ Push rejected (concurrency detected). Retrying in ${DELAY}s (attempt $RETRY_COUNT/$MAX_RETRIES)..."
+                sleep $DELAY
+                DELAY=$((DELAY * 2))
+              fi
+            done
+
+            echo "❌ Error: Failed to push canonical integration after $MAX_RETRIES attempts."
+            exit 1
+          else
+            echo "ℹ No pending changes generated in working tree."
+          fi

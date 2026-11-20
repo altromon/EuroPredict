@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/product/business-rule.schema.json",
+  "title": "ProductShape Business Rule Schema (Versionable)",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "version",
+    "enforcement-level"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^BR-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "type": {
+      "type": "string",
+      "const": "business-rule"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Business rule semantic version (SemVer)."
+    },
+    "schema-version": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "enforcement-level": {
+      "type": "string",
+      "enum": [
+        "strict-invariant",
+        "override-with-approval",
+        "guideline"
+      ]
+    },
+    "defined-in": {
+      "type": "string",
+      "pattern": "^BC-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "uses-terms": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^TERM-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      }
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^BR-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^BR-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    }
+  },
+  "additionalProperties": false
+}

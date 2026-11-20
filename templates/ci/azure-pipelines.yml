@@ -1,0 +1,94 @@
+# ==============================================================================
+# AI-SDLC: Azure DevOps Pipelines Template
+# Continuous Quality Gates verification and canonical promotion of SDD changes
+# ==============================================================================
+
+trigger:
+  branches:
+    include:
+      - main
+      - release/*
+
+pr:
+  branches:
+    include:
+      - main
+      - release/*
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+  - stage: ValidateAndTest
+    displayName: 'Verification & Quality Gates'
+    jobs:
+      - job: QualityAndTests
+        displayName: 'Quality Gates, Linting & Tests'
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '20.x'
+            displayName: 'Install Node.js 20'
+
+          - script: |
+              corepack enable
+              corepack prepare pnpm@10 --activate
+              pnpm install --frozen-lockfile
+              pnpm approve-builds --all
+              pnpm run build
+            displayName: 'Install dependencies and build monorepo'
+
+          - script: |
+              npx @aisdlc/cli check
+            displayName: 'Run AI-SDLC pre-flight (check)'
+
+          - script: |
+              pnpm test
+            displayName: 'Run unit test suite'
+
+          - script: |
+              npx @aisdlc/cli verify all
+            displayName: 'Run Full Release Gate (verify all)'
+
+  - stage: CanonicalIntegration
+    displayName: 'Post-Merge SDD Canonical Integration'
+    dependsOn: ValidateAndTest
+    condition: and(succeeded(), in(variables['Build.SourceBranch'], 'refs/heads/main', 'refs/heads/release/'))
+    jobs:
+      - job: SddPromote
+        displayName: 'Consolidate canonical SDD specifications'
+        steps:
+          - checkout: self
+            persistCredentials: true
+            fetchDepth: 0
+
+          - task: NodeTool@0
+            inputs:
+              versionSpec: '20.x'
+            displayName: 'Install Node.js 20'
+
+          - script: |
+              corepack enable
+              corepack prepare pnpm@10 --activate
+              pnpm install --frozen-lockfile
+              pnpm approve-builds --all
+              pnpm run build
+            displayName: 'Install dependencies'
+
+          - script: |
+              npx @aisdlc/cli sdd integrate --auto || true
+            name: SddIntegrate
+            displayName: 'Detect and integrate SDD increment'
+
+          - script: |
+              git config user.name "azure-pipelines[bot]"
+              git config user.email "azure-pipelines[bot]@dev.azure.com"
+              git add -A
+              if ! git diff --cached --quiet; then
+                git commit -m "chore(sdd): integrate changes into canonical baseline [skip ci]"
+                git push origin HEAD:$(Build.SourceBranchName)
+                echo "✔ Canonical integration synchronized in Azure DevOps."
+              else
+                echo "ℹ No modifications generated in working tree."
+              fi
+            displayName: 'Synchronize canonical changes to repository'

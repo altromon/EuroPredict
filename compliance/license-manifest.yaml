@@ -1,0 +1,54 @@
+# ==============================================================================
+# AI-SDLC: Manifiesto de Cumplimiento de Licencias Evaluadas
+# ==============================================================================
+# Verificado contra: /license-policy.yaml
+# ==============================================================================
+
+evaluated_dependencies:
+  - package: "@modelcontextprotocol/sdk"
+    version: "1.0.4"
+    spdx_license: "MIT"
+    category: "permissive_free"
+    status: "APPROVED"
+    usage: "SDK oficial para servidor Model Context Protocol."
+    commercial_payment_required: false
+
+  - package: "commander"
+    version: "12.1.0"
+    spdx_license: "MIT"
+    category: "permissive_free"
+    status: "APPROVED"
+    usage: "Parser de línea de comandos para @ai-sdlc/cli."
+    commercial_payment_required: false
+
+  - package: "zod"
+    version: "3.23.8"
+    spdx_license: "MIT"
+    category: "permissive_free"
+    status: "APPROVED"
+    usage: "Validación de esquemas y tipos en runtime."
+    commercial_payment_required: false
+
+  - package: "js-yaml"
+    version: "4.1.0"
+    spdx_license: "MIT"
+    category: "permissive_free"
+    status: "APPROVED"
+    usage: "Parser y serializador YAML para especificaciones y frontmatter."
+    commercial_payment_required: false
+
+  - package: "chalk"
+    version: "5.3.0"
+    spdx_license: "MIT"
+    category: "permissive_free"
+    status: "APPROVED"
+    usage: "Estilizado de salida en terminal para comandos CLI."
+    commercial_payment_required: false
+
+  - package: "ajv"
+    version: "8.17.1"
+    spdx_license: "MIT"
+    category: "permissive_free"
+    status: "APPROVED"
+    usage: "Validador JSON Schema para ProductShape, arc42 y SDD."
+    commercial_payment_required: false

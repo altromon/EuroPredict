@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/compliance/quality-policy.schema.json",
+  "title": "Software Quality Policy Schema (Polyglot)",
+  "type": "object",
+  "required": [
+    "version",
+    "project",
+    "enforcement_mode",
+    "coding_rules",
+    "release_thresholds",
+    "agent_guardrails"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "project": {
+      "type": "string"
+    },
+    "enforcement_mode": {
+      "type": "string",
+      "enum": [
+        "STRICT",
+        "PERMISSIVE"
+      ]
+    },
+    "ratchet_mode": {
+      "type": "boolean"
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "target_directories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "supported_extensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "exclude_patterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "language_toolchains": {
+      "type": "object"
+    },
+    "coding_rules": {
+      "type": "object",
+      "required": [
+        "standards",
+        "enforce_formatting",
+        "rules"
+      ],
+      "properties": {
+        "standards": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "enforce_formatting": {
+          "type": "boolean"
+        },
+        "formatting_engine": {
+          "type": "string"
+        },
+        "linter_engine": {
+          "type": "string"
+        },
+        "rules": {
+          "type": "object"
+        }
+      }
+    },
+    "release_thresholds": {
+      "type": "object",
+      "required": [
+        "cyclomatic_complexity",
+        "cognitive_complexity",
+        "maintainability_index",
+        "code_duplication",
+        "test_coverage"
+      ],
+      "properties": {
+        "cyclomatic_complexity": {
+          "type": "object",
+          "required": [
+            "max_per_function",
+            "action_on_breach"
+          ],
+          "properties": {
+            "max_per_function": {
+              "type": "integer"
+            },
+            "warning_at": {
+              "type": "integer"
+            },
+            "action_on_breach": {
+              "type": "string"
+            }
+          }
+        },
+        "cognitive_complexity": {
+          "type": "object",
+          "required": [
+            "max_per_function",
+            "action_on_breach"
+          ],
+          "properties": {
+            "max_per_function": {
+              "type": "integer"
+            },
+            "warning_at": {
+              "type": "integer"
+            },
+            "action_on_breach": {
+              "type": "string"
+            }
+          }
+        },
+        "maintainability_index": {
+          "type": "object",
+          "required": [
+            "min_acceptable_score",
+            "action_on_breach"
+          ],
+          "properties": {
+            "min_acceptable_score": {
+              "type": "number"
+            },
+            "target_score": {
+              "type": "number"
+            },
+            "action_on_breach": {
+              "type": "string"
+            }
+          }
+        },
+        "code_duplication": {
+          "type": "object",
+          "required": [
+            "max_percentage",
+            "action_on_breach"
+          ],
+          "properties": {
+            "max_percentage": {
+              "type": "number"
+            },
+            "action_on_breach": {
+              "type": "string"
+            }
+          }
+        },
+        "test_coverage": {
+          "type": "object",
+          "required": [
+            "min_line_coverage_percent",
+            "action_on_breach"
+          ],
+          "properties": {
+            "min_line_coverage_percent": {
+              "type": "number"
+            },
+            "min_branch_coverage_percent": {
+              "type": "number"
+            },
+            "min_function_coverage_percent": {
+              "type": "number"
+            },
+            "action_on_breach": {
+              "type": "string"
+            }
+          }
+        },
+        "technical_debt": {
+          "type": "object"
+        }
+      }
+    },
+    "agent_guardrails": {
+      "type": "object",
+      "required": [
+        "enforce_pre_commit_linter",
+        "prevent_suppression_comments"
+      ],
+      "properties": {
+        "enforce_pre_commit_linter": {
+          "type": "boolean"
+        },
+        "prevent_suppression_comments": {
+          "type": "boolean"
+        },
+        "auto_refactor_on_high_complexity": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

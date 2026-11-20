@@ -1,0 +1,48 @@
+# ==============================================================================
+# AI-SDLC: Software Quality, Coding Rules & Release Gate Policy
+# ==============================================================================
+version: "1.0"
+project: "Standard AI-SDLC Project"
+enforcement_mode: "STRICT"
+
+scope:
+  target_directories:
+    - "src"
+    - "lib"
+  supported_extensions:
+    - ".ts"
+    - ".js"
+    - ".py"
+    - ".java"
+    - ".go"
+    - ".cs"
+    - ".rs"
+    - ".cpp"
+    - ".c"
+  exclude_patterns:
+    - "node_modules"
+    - "__pycache__"
+    - ".pytest_cache"
+    - "target"
+    - "bin"
+    - "obj"
+    - ".git"
+    - "reports"
+    - "dist"
+    - ".changeset"
+    - "examples"
+    - "scratch"
+    - "templates"
+
+thresholds:
+  cyclomatic_complexity:
+    max_per_function: 10
+  cognitive_complexity:
+    max_per_function: 15
+  maintainability_index:
+    min_acceptable_score: 50.0
+  function_length:
+    max_function_lines: 40
+  test_enforcement:
+    require_function_unit_tests: true
+    require_ui_component_tests: true

@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/compliance/license-policy.schema.json",
+  "title": "Open Source License Policy Schema",
+  "type": "object",
+  "required": [
+    "version",
+    "project",
+    "default_action",
+    "categories",
+    "agent_guardrails",
+    "ci_gates"
+  ],
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "project": {
+      "type": "string"
+    },
+    "default_action": {
+      "type": "string",
+      "enum": [
+        "ALLOW",
+        "DENY",
+        "REVIEW_REQUIRED"
+      ]
+    },
+    "categories": {
+      "type": "object"
+    },
+    "agent_guardrails": {
+      "type": "object",
+      "required": [
+        "enforce_pre_check",
+        "reject_unknown_licenses"
+      ],
+      "properties": {
+        "enforce_pre_check": {
+          "type": "boolean"
+        },
+        "reject_unknown_licenses": {
+          "type": "boolean"
+        },
+        "auto_reject_categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "on_commercial_detected": {
+          "type": "object"
+        }
+      }
+    },
+    "ci_gates": {
+      "type": "object",
+      "required": [
+        "fail_on_denied",
+        "generate_sbom"
+      ],
+      "properties": {
+        "fail_on_denied": {
+          "type": "boolean"
+        },
+        "fail_on_missing_license": {
+          "type": "boolean"
+        },
+        "generate_sbom": {
+          "type": "boolean"
+        },
+        "sbom_format": {
+          "type": "string"
+        },
+        "output_notices_file": {
+          "type": "string"
+        },
+        "allowed_depth": {
+          "type": "string",
+          "enum": [
+            "DIRECT",
+            "TRANSITIVE"
+          ]
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,17 @@
+{
+  "branch-guard": {
+    "enabled": true,
+    "PreToolUse": [
+      {
+        "matcher": "edit_file|write_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/guard-branch.cjs",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

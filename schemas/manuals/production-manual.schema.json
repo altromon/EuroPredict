@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/manuals/production-manual.schema.json",
+  "title": "AI-SDLC Production & Operations Manual Schema",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "version",
+    "applies-to-version",
+    "target-audience"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^MAN-PROD-[A-Z0-9]+(-[A-Z0-9]+)*$",
+      "description": "Immutable production manual identifier (e.g. MAN-PROD-SENTINELCORE)."
+    },
+    "type": {
+      "type": "string",
+      "const": "production-manual"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Document semantic version (SemVer)."
+    },
+    "schema-version": {
+      "type": "string",
+      "description": "Template schema version."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3,
+      "description": "Descriptive title of the production manual."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "applies-to-version": {
+      "type": "string",
+      "description": "Software version or release this production manual applies to (e.g. v1.0.0)."
+    },
+    "target-audience": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "description": "Target technical profiles (e.g. DevOps, SRE, Release Manager, SecOps)."
+    },
+    "components-covered": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^CMP-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Architecture components (CMP-*) deployed and covered by the manual."
+    },
+    "enclaves-involved": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^SEC-ENC-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Security enclaves (SEC-ENC-*) in which deployment executes."
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^MAN-PROD-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^MAN-PROD-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    }
+  },
+  "additionalProperties": false
+}

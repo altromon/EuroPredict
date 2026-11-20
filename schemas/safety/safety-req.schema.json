@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/safety/safety-req.schema.json",
+  "title": "Safety Requirement Schema (Functional Safety & Hazard Mitigation)",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "version",
+    "safety-domain",
+    "safety-integrity-level",
+    "mitigates-hazard",
+    "fail-safe-action"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^SAF-REQ-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "type": {
+      "type": "string",
+      "const": "safety-requirement"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Safety requirement semantic version (SemVer)."
+    },
+    "schema-version": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "safety-domain": {
+      "type": "string",
+      "enum": [
+        "flight-control",
+        "collision-avoidance",
+        "energy-management",
+        "emergency-recovery",
+        "sensor-integrity",
+        "propulsion",
+        "telemetry"
+      ],
+      "description": "Operational safety domain."
+    },
+    "safety-integrity-level": {
+      "type": "string",
+      "description": "Safety integrity level (e.g. DAL-A..D, ASIL-A..D, SIL-1..4)."
+    },
+    "mitigates-hazard": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^HAZ-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Operational hazards mitigated by safety control."
+    },
+    "fail-safe-action": {
+      "type": "string",
+      "description": "Automatic action or contingency maneuver to enter safe state."
+    },
+    "fault-tolerance-time-ms": {
+      "type": "number",
+      "description": "Fault tolerance time interval limit in milliseconds (FTTI)."
+    },
+    "acceptance-format": {
+      "type": "string",
+      "enum": [
+        "gherkin",
+        "declarative-prose"
+      ]
+    },
+    "cucumber-tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

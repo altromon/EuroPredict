@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/product/requirement.schema.json",
+  "title": "ProductShape Requirement Schema (Strict Test Validation Enforced)",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "version",
+    "category",
+    "derives-from",
+    "verifiable-by"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(FR|QR|CON)-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "type": {
+      "type": "string",
+      "const": "requirement"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Requirement semantic version (SemVer)."
+    },
+    "schema-version": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "functional",
+        "quality",
+        "constraint"
+      ]
+    },
+    "derives-from": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "pattern": "^(UC|BR|CON|CAP|GOAL)-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Product Traceability: Origin Use Cases, Rules, Constraints, or Capabilities."
+    },
+    "verifiable-by": {
+      "type": "string",
+      "enum": [
+        "cucumber-bdd",
+        "automated-unit-test",
+        "integration-test",
+        "performance-benchmark",
+        "security-audit",
+        "inspection"
+      ],
+      "description": "Mandatory formal verification method."
+    },
+    "acceptance-format": {
+      "type": "string",
+      "enum": [
+        "gherkin",
+        "declarative-prose"
+      ],
+      "description": "Acceptance criteria format."
+    },
+    "cucumber-tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^@[a-zA-Z0-9_-]+$"
+      },
+      "description": "Cucumber tags for filtering and executing BDD tests."
+    },
+    "enforce-bdd-variants": {
+      "type": "boolean",
+      "description": "When true, enforces all 3 BDD scenario categories (@nominal, @boundary, @invalid)."
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^(FR|QR|CON)-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^(FR|QR|CON)-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    }
+  },
+  "additionalProperties": false
+}

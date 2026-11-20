@@ -1,0 +1,74 @@
+# ==============================================================================
+# AI-SDLC: GitLab CI/CD Pipeline Template
+# Continuous Quality Gates verification and canonical promotion of SDD changes
+# ==============================================================================
+
+stages:
+  - validate
+  - test
+  - integrate
+
+default:
+  image: node:20
+
+variables:
+  PNPM_HOME: "$CI_PROJECT_DIR/.pnpm"
+
+before_script:
+  - corepack enable
+  - corepack prepare pnpm@10 --activate
+  - pnpm config set store-dir .pnpm-store
+  - pnpm install --frozen-lockfile
+  - pnpm approve-builds --all
+  - pnpm run build
+
+# ------------------------------------------------------------------------------
+# Stage 1: Pre-flight and Quality Gates Verification
+# ------------------------------------------------------------------------------
+quality-gates:
+  stage: validate
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TITLE !~ /^(Draft:|WIP:)/'
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: '$CI_COMMIT_BRANCH =~ /^release\/.*/'
+  script:
+    - npx @aisdlc/cli check
+
+# ------------------------------------------------------------------------------
+# Stage 2: Unit Test Suite & Full Verification
+# ------------------------------------------------------------------------------
+test-and-verify:
+  stage: test
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TITLE !~ /^(Draft:|WIP:)/'
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    - if: '$CI_COMMIT_BRANCH =~ /^release\/.*/'
+  script:
+    - pnpm test
+    - npx @aisdlc/cli verify all
+
+# ------------------------------------------------------------------------------
+# Stage 3: Post-Merge SDD Canonical Integration
+# ------------------------------------------------------------------------------
+sdd-canonical-integration:
+  stage: integrate
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "push"'
+    - if: '$CI_COMMIT_BRANCH =~ /^release\/.*/ && $CI_PIPELINE_SOURCE == "push"'
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+  variables:
+    GIT_STRATEGY: clone
+    GIT_DEPTH: 0
+  script:
+    - npx @aisdlc/cli sdd integrate --auto || true
+    - |
+      git config user.name "gitlab-ci-bot"
+      git config user.email "gitlab-ci-bot@noreply.gitlab.com"
+      git add -A
+      if ! git diff --cached --quiet; then
+        git commit -m "chore(sdd): integrate changes into canonical baseline [skip ci]"
+        git push "https://oauth2:${CI_JOB_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git" "HEAD:${CI_COMMIT_BRANCH}"
+        echo "✔ Canonical integration synchronized in GitLab."
+      else
+        echo "ℹ No pending changes generated."
+      fi

@@ -1,0 +1,63 @@
+name: Deploy AI-SDLC Dashboard to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy-dashboard:
+    name: Build & Publish Interactive Dashboard
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Full git history required for historical KPIs and telemetry
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate AI-SDLC Interactive Dashboard
+        run: |
+          mkdir -p reports
+          npx --yes @aisdlc/cli report dashboard --output reports/index.html
+          cp reports/index.html reports/dashboard.html
+          touch reports/.nojekyll
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: reports
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Emit Summary to GitHub Actions
+        if: always() && steps.deployment.outcome == 'success'
+        run: |
+          echo "### 🌐 AI-SDLC Interactive Dashboard Published" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The interactive PDaC / RTM graph, Quality Gate telemetry, and release metrics are live at:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "👉 **[Open Live Dashboard](${{ steps.deployment.outputs.page_url }})**" >> $GITHUB_STEP_SUMMARY

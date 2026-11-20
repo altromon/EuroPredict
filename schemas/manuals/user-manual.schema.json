@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/manuals/user-manual.schema.json",
+  "title": "AI-SDLC User Manual Schema",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "title",
+    "status",
+    "version",
+    "target-audience",
+    "allowed-roles",
+    "applies-to-version"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^MAN-USER-[A-Z0-9]+(-[A-Z0-9]+)*$",
+      "description": "Immutable user manual identifier (e.g. MAN-USER-SENTINELCORE)."
+    },
+    "type": {
+      "type": "string",
+      "const": "user-manual"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$",
+      "description": "Document semantic version (SemVer)."
+    },
+    "schema-version": {
+      "type": "string",
+      "description": "Template schema version."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 3,
+      "description": "Descriptive title of the user manual."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "retired"
+      ]
+    },
+    "applies-to-version": {
+      "type": "string",
+      "description": "Software version or release this manual applies to (e.g. v1.0.0)."
+    },
+    "target-audience": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "description": "Target user profiles or roles for the manual."
+    },
+    "allowed-roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "description": "Formal catalog of authorized roles to operate the application (linked to ACT-*)."
+    },
+    "journeys-covered": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^JRN-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Product journey identifiers (JRN-*) covered in the manual."
+    },
+    "use-cases-covered": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^UC-[A-Z0-9]+(-[A-Z0-9]+)*$"
+      },
+      "description": "Use case identifiers (UC-*) implemented across journeys."
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^MAN-USER-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^MAN-USER-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,212 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/sdd/tasks.schema.json",
+  "title": "Verifiable Tasks & Human Autonomy Governance Schema",
+  "type": "object",
+  "required": [
+    "id",
+    "type",
+    "change-id",
+    "version",
+    "tasks"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^TSK-PLAN-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "type": {
+      "type": "string",
+      "const": "task-plan"
+    },
+    "change-id": {
+      "type": "string",
+      "pattern": "^(CHG|FEAT)-[A-Z0-9]+(-[A-Z0-9]+)*$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$"
+    },
+    "schema-version": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 5
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "approved",
+        "in-progress",
+        "completed",
+        "blocked"
+      ]
+    },
+    "governance-summary": {
+      "type": "object",
+      "properties": {
+        "autonomous-tasks-count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "human-review-plan-count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "ambiguous-count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "high-risk-manual-count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "complexity",
+          "risk-level",
+          "autonomy-mode",
+          "verification",
+          "assigned-to",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^TSK-[0-9]{3,}$"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 5
+          },
+          "complexity": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH"
+            ]
+          },
+          "risk-level": {
+            "type": "string",
+            "enum": [
+              "LOW",
+              "MEDIUM",
+              "HIGH",
+              "CRITICAL"
+            ]
+          },
+          "autonomy-mode": {
+            "type": "string",
+            "enum": [
+              "AUTONOMOUS",
+              "HUMAN_REVIEW_PLAN",
+              "AMBIGUOUS",
+              "HIGH_RISK_MANUAL"
+            ],
+            "description": "AI agent human governance and supervision mode."
+          },
+          "verification": {
+            "type": "object",
+            "required": [
+              "method",
+              "command-or-criteria"
+            ],
+            "properties": {
+              "method": {
+                "type": "string",
+                "enum": [
+                  "automated-unit-test",
+                  "cucumber-bdd",
+                  "quality-gate",
+                  "license-audit",
+                  "sast-scan",
+                  "privacy-audit",
+                  "manual-inspection",
+                  "smoke-test"
+                ]
+              },
+              "command-or-criteria": {
+                "type": "string",
+                "minLength": 5
+              }
+            }
+          },
+          "assigned-to": {
+            "type": "string",
+            "enum": [
+              "agent-developer",
+              "agent-security-auditor",
+              "agent-compliance-checker",
+              "agent-privacy-officer",
+              "agent-qa",
+              "human-engineer",
+              "human-architect",
+              "pair-human-agent"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "PENDING",
+              "IN_PROGRESS",
+              "COMPLETED",
+              "BLOCKED"
+            ]
+          },
+          "blocking-reason": {
+            "type": "string"
+          },
+          "implements-components": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^CMP-[A-Z0-9]+(-[A-Z0-9]+)*$"
+            },
+            "description": "Architecture components (CMP-*) implemented by this atomic task."
+          },
+          "satisfies-requirements": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^(FR|QR|CON|SEC-REQ|SAF-REQ|PRIV-REQ)-[A-Z0-9]+(-[A-Z0-9]+)*$"
+            },
+            "description": "Requirements satisfied by this atomic task."
+          },
+          "implements-contracts": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            },
+            "description": "Explicit interface or method contracts from design.md implemented by this task."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "supersedes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "superseded-by": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false
+}

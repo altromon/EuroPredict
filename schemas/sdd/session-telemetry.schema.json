@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-sdlc.org/schemas/sdd/session-telemetry.schema.json",
+  "title": "Agent Session Telemetry Schema (.ai-sdlc/session-telemetry.json)",
+  "type": "object",
+  "required": [
+    "model",
+    "promptTokens",
+    "completionTokens",
+    "activeTimeSeconds"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^(TEL-SES|SES-TEL|TEL)-[A-Z0-9]+(-[A-Z0-9]+)*$",
+      "description": "Optional telemetry session identifier."
+    },
+    "type": {
+      "type": "string",
+      "const": "session-telemetry"
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1,
+      "description": "AI model name or identifier."
+    },
+    "promptTokens": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total prompt tokens consumed."
+    },
+    "completionTokens": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total completion tokens generated."
+    },
+    "activeTimeSeconds": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Active session development duration in seconds."
+    },
+    "author": {
+      "type": "string"
+    },
+    "authorType": {
+      "type": "string",
+      "enum": [
+        "agent",
+        "human"
+      ]
+    },
+    "sessionId": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string"
+    },
+    "provider": {
+      "type": "string"
+    },
+    "confidence": {
+      "type": "string",
+      "enum": [
+        "HIGH",
+        "MEDIUM",
+        "LOW"
+      ]
+    },
+    "source": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}
